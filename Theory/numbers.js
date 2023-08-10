@@ -34,7 +34,7 @@ Math.round - округление идет до ближ целочис знач
 Math.trunc - возвращ целую часть числа
 Для создания рандомных чисел можно использовать Math.random
 */
-console.log(Math.sqrt(25));
+console.log(Math.sqrt(6));
 console.log(Math.pow(2, 3));
 console.log(Math.abs(-44));
 console.log(Math.max(-44, 11, 334, 55, 676556, 56));
