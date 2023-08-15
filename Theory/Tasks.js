@@ -340,3 +340,83 @@ dec();
 console.log(get()); //8
 dec();
 console.log(get()); //7
+
+//Part 4
+
+//Task1
+//Напишите функцию calculateAge(), которая принимает день рождения и возвращает количество лет.
+const calculateAge = (YourAge) =>
+  new Date().getFullYear() - birthDate.getFullYear();
+const birthDate = new Date('1990-05-20');
+const age = calculateAge(birthDate);
+
+console.log(age);
+
+//Task2
+//Напишите функцию getDateDifference(), которая возвращает разницу в днях между двумя датами.
+const getDateDifference = (diff) => date2.getDate() - date1.getDate();
+const date1 = new Date('2027-06-01');
+const date2 = new Date('2027-06-10');
+const difference = getDateDifference(date1, date2);
+console.log(difference); // 9
+
+//Task3
+// Напишите функцию getTimeUntilDate(date), которая возвращает объект с информацией о том, сколько времени осталось от текущей даты до переданной.
+
+function getTimeUntilDate() {
+  const currentDate = new Date();
+  const days = (targetDate.getFullYear() - currentDate.getFullYear()) * 365;
+  const hours = targetDate.getHours() - currentDate.getHours();
+  const minutes = targetDate.getMinutes() - currentDate.getMinutes();
+  const seconds = targetDate.getSeconds() - currentDate.getSeconds();
+  return { days, hours, minutes, seconds };
+}
+const targetDate = new Date('2027-12-31T23:59:59');
+const timeUntilTargetDate = getTimeUntilDate(targetDate);
+console.log(timeUntilTargetDate);
+// { days: 100, hours: 20, minutes: 45, seconds: 31 }
+
+//Task4
+//Напишите функцию isWeekends(), которая проверяет, является ли указанная дата выходным днем.
+function isWeekends(date) {
+  let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+  return days[date.getDay()] === 'ВС' || days[date.getDay()] === 'СБ';
+}
+const date3 = new Date('2027-07-10'); // Суббота
+const date4 = new Date('2027-07-12'); // Понедельник
+
+console.log(isWeekends(date3)); // true
+console.log(isWeekends(date4)); // false
+
+//Task5
+//Напишите функцию, которая проверяет, является ли год високосным. Возвращает true, если да, иначе — false.
+function isLeapYear(myYear) {
+  let realDate = new Date(myYear, 1, 29).getDate();
+  if (realDate == 29) {
+    return true;
+  } else {
+    return false;
+  }
+}
+console.log(isLeapYear(2023)); // false
+console.log(isLeapYear(2024)); // true
+
+//Task6
+//Напишите функцию, которая возвращает последнее число месяца.
+
+function getLastDayOfMonth(year, month) {
+  // Создаем новую дату для следующего месяца
+  const nextMonth = new Date(year, month + 1, 1);
+
+  // Устанавливаем дату на последний день текущего месяца (0 дня следующего месяца)
+  nextMonth.setDate(0);
+
+  // Получаем день месяца, который будет последним
+  const lastDay = nextMonth.getDate();
+
+  return lastDay;
+}
+
+console.log(getLastDayOfMonth(2027, 5)); // 30 (июнь)
+console.log(getLastDayOfMonth(2027, 1)); // 28 (февраль)
+console.log(getLastDayOfMonth(2027, 0)); // 31 (январь)
