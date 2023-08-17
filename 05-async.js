@@ -101,16 +101,22 @@ fetchList();
 //Task3
 //Напишите функцию sumWithDelay(), которая принимает delay, a, b и возвращает a + b через delay миллисекунд. Функция должна работать на основе Promise API.
 
-function sumWithDelay() {
-  // Ваш код здесь...
+function sumWithDelay(delay, a, b) {
+  //создаем функцию sumWithDelay и помещаем в параметры передаваемые значения
+  return new Promise((resolve) => {
+    // в этой функции создаем промисс и помещаем в него асинхронный код который будет обрабатывать получаемые параметры по таймауту полученному в delay
+    setTimeout(() => {
+      resolve(a + b); //указываем что должно происходить при достижении таймаута
+    }, delay);
+  });
 }
-
 async function start() {
+  //создаем асинхронную функцию которая будет передавать в sumWithDelay значения и выводить результат в консоль
   const result = await sumWithDelay(1000, 5, 5);
   console.log(result);
 }
 
-start();
+start(); //вызываем функ и триггерим выполнение всей цепочки
 
 //Task4
 /*
@@ -122,16 +128,17 @@ const USERS = [
   { id: '002', name: 'Иван', age: 28 },
   { id: '003', name: 'Егор', age: 30 },
 ];
-
 function fetchUser(id) {
-  // Ваш код здесь...
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const User = USERS.find((User) => User.id === id);
+      resolve(User); //указываем что должно происходить при достижении таймаута
+      reject('Error');
+    }, 2500);
+  });
 }
-
 async function start() {
-  // ...
   const result = await fetchUser('001');
   console.log(result); // { id: '001', name: "Алексей", age: 25 }
-  // ...
 }
-
 start();
