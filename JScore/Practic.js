@@ -159,3 +159,10 @@ function getSumm(numbers) {
   return positiveNum.reduce((acc, curr) => acc + curr, 0);
 }
 console.log(getSumm(numbers4));
+
+//Отсортировать в по возр
+let a = [11, 5, 8, 21, 18, 2, 1, 33];
+function sortArr(arr) {
+  return String(arr.sort((a, b) => a - b)); //если нужно в убывании тогда b - a
+} //можно без String если не нужноо выводить строкой
+console.log(sortArr(a)); //1,2,5,8,11,18,21,33
