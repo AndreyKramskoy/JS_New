@@ -166,3 +166,32 @@ function sortArr(arr) {
   return String(arr.sort((a, b) => a - b)); //если нужно в убывании тогда b - a
 } //можно без String если не нужноо выводить строкой
 console.log(sortArr(a)); //1,2,5,8,11,18,21,33
+
+/*
+Задача 1: Поиск индекса элемента
+Напишите функцию, которая принимает массив чисел и целевое число в качестве аргументов и возвращает индекс 
+первого вхождения целевого числа в массиве. Если число не найдено, верните -1.
+*/
+function getTurgetNumb(arr, num) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === num) {
+      return i;
+    }
+  }
+  return -1;
+}
+const numbers5 = [1, 2, 3, 4, 5];
+const targetNumber = 3;
+console.log(getTurgetNumb(numbers5, targetNumber));
+
+/*
+Задача 2: Генерация уникального ID
+Напишите функцию для генерации случайного уникального ID. Уникальный ID может быть представлен как строка, состоящая из букв и цифр.
+Гарантируйте, что генерируемые ID действительно уникальны.
+*/
+function generateUniqueId() {
+  const uniqueId =
+    Math.random().toString(36).substring(2) + Date.now().toString(36);
+  return uniqueId;
+}
+console.log(generateUniqueId());
