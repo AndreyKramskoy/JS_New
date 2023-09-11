@@ -129,10 +129,12 @@ function getMaxNum(elem) {
   let max = elem[0];
   for (let i = 1; i < elem.length; i++) {
     if (elem[i] > max) {
-      return (max = elem[i]);
+      max = elem[i];
     }
   }
+  return max;
 }
+
 console.log(getMaxNum(numbers3));
 
 /*Задача 2: Палиндромная строка
@@ -195,3 +197,64 @@ function generateUniqueId() {
   return uniqueId;
 }
 console.log(generateUniqueId());
+
+//Напишите функцию на языке JavaScript, которая принимает массив чисел и возвращает наибольшее число из этого массива.
+function findLargestNumber(arr) {
+  let maxNum = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    if (maxNum < arr[i]) {
+      maxNum = arr[i];
+    }
+  }
+  return maxNum;
+}
+
+const numbers6 = [4, 9, 2, 18, 5];
+console.log(findLargestNumber(numbers6)); // Ожидаемый результат: 18
+
+//Напишите функцию на языке JavaScript, которая принимает строку и возвращает количество гласных букв (a, e, i, o, u) в этой строке, независимо от регистра (то есть, учитывая как заглавные, так и строчные буквы).
+function countVowels(str) {
+  let vowelList = 'aeiouAEIOU';
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    //Метод indexOf() возвращает индекс первого вхождения указанного значения в строковый объект
+    if (vowelList.indexOf(str[i]) != -1) {
+      count++;
+    }
+  }
+  return count;
+}
+
+const text = 'Hello, World!';
+const vowelCount = countVowels(text);
+console.log(vowelCount); // Ожидаемый результат: 3 (e, o, o - 3 гласные)
+
+//Задача: Поиск уникальных элементов в массиве
+function findUniqueElements(arr) {
+  let newArr = []; // Создаем пустой массив для уникальных элементов
+  for (let i = 0; i < arr.length; i++) {
+    // Проверяем, есть ли текущий элемент в уникальном массиве
+    if (newArr.indexOf(arr[i]) === -1) {
+      // Если элемент не найден, добавляем его в уникальный массив
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
+const originalArray = [1, 2, 3, 2, 4, 5, 1, 6];
+const uniqueArray = findUniqueElements(originalArray);
+console.log(uniqueArray); // Ожидаемый результат: [1, 2, 3, 4, 5, 6] (порядок сохранен)
+
+//Задача: Проверка на палиндром
+function isPalindrome(str) {
+  let newStr = str.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+  if (newStr.split('').reverse().join('') === newStr) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+console.log(isPalindrome('A man, a plan, a canal, Panama')); // Ожидаемый результат: true
+console.log(isPalindrome('racecar')); // Ожидаемый результат: true
+console.log(isPalindrome('hello')); // Ожидаемый результат: false
