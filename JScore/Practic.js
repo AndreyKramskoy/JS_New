@@ -258,3 +258,21 @@ function isPalindrome(str) {
 console.log(isPalindrome('A man, a plan, a canal, Panama')); // Ожидаемый результат: true
 console.log(isPalindrome('racecar')); // Ожидаемый результат: true
 console.log(isPalindrome('hello')); // Ожидаемый результат: false
+
+//Задача: Вычисление факториала
+function factorial(n) {
+  // Обрабатываем случаи, когда n равно 0 или 1
+  if (n === 0 || n === 1) {
+    return 1;
+  }
+  let result = 1; // Создаем переменную для хранения результата (факториала)
+  // Используем цикл для умножения чисел от 2 до n
+  for (let i = 2; i <= n; i++) {
+    result *= i;
+  }
+  return result;
+}
+
+console.log(factorial(5)); // Ожидаемый результат: 120 (5! = 5 * 4 * 3 * 2 * 1 = 120)
+console.log(factorial(0)); // Ожидаемый результат: 1 (0! = 1)
+console.log(factorial(1)); // Ожидаемый результат: 1 (1! = 1)
