@@ -114,3 +114,61 @@ const promise3 = promise2.then((result) => {
 promise3.then((result) => {
   console.log('Final Result:', result);
 });
+/*
+Давайте подробно разберем код:
+
+1. **Создание первой промисса (promise1)**:
+   ```javascript
+   const promise1 = new Promise((resolve, reject) => {
+     setTimeout(() => {
+       const number = 5; // Вы можете заменить это на любое число по вашему выбору
+       console.log("First Promise resolved with:", number);
+       resolve(number);
+     }, 1000);
+   });
+   ```
+   - Мы создаем первый промисс с помощью конструктора `Promise`. Этот промисс выполняет асинхронную операцию с помощью `setTimeout`.
+   - Внутри промисса есть функция с двумя параметрами: `resolve` и `reject`. `resolve` используется для успешного завершения промисса.
+   - Мы через 1 секунду решаем промисс и передаем число (5 в данном случае) как результат операции.
+
+2. **Создание второй промисса (promise2), привязанный к первому**:
+   ```javascript
+   const promise2 = promise1.then((result) => {
+     return new Promise((resolve, reject) => {
+       setTimeout(() => {
+         const squaredNumber = result * result;
+         console.log("Second Promise resolved with:", squaredNumber);
+         resolve(squaredNumber);
+       }, 3000);
+     });
+   });
+   ```
+   - Мы используем метод `.then()` на первом промиссе `promise1`, чтобы выполнить дополнительные действия после его успешного завершения.
+   - Внутри `.then()`, мы получаем результат первого промисса (который был передан через `resolve`) в параметре `result`.
+   - Затем создаем новый промисс (`promise2`), который выполняет асинхронную операцию через `setTimeout`.
+   - Второй промисс возводит результат в квадрат и передает этот результат через `resolve`.
+
+3. **Создание третьего промисса (promise3), привязанный ко второму**:
+   ```javascript
+   const promise3 = promise2.then((result) => {
+     return new Promise((resolve, reject) => {
+       setTimeout(() => {
+         const squaredNumber = result * result;
+         console.log("Third Promise resolved with:", squaredNumber);
+         resolve(squaredNumber);
+       }, 3000);
+     });
+   });
+   ```
+   - То же самое, что и для второго промисса, но теперь третий промисс (`promise3`) привязан к результату второго промисса.
+
+4. **Завершение итоговой операции**:
+   ```javascript
+   promise3.then((result) => {
+     console.log("Final Result:", result);
+   });
+   ```
+   - Здесь мы используем `.then()` на третьем промиссе (`promise3`) для выполнения операции после завершения всех предыдущих промиссов.
+   - В данном случае, мы просто выводим итоговый квадрат числа в консоль.
+
+Таким образом, весь код создает цепочку трех промиссов, где каждый последующий промисс выполняет операцию над результатом предыдущего и выводит результат в консоль. После завершения всей цепочки операций, вы получите итоговый результат в консоли.*/
