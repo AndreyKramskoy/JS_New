@@ -76,3 +76,41 @@ const sleep = (ms) => {
 };
 sleep(2000).then(() => console.log('After 2 sec'));
 sleep(3000).then(() => console.log('After 3 sec'));
+
+//Задача- ============ Make a chain of three promises. Let the first promise return a number. Make each subsequent promise square the result of the previous promise after 3 seconds. After the end of the manipulations, display the console log number on the screen.
+
+// First Promise: Returns a number after 1 second
+const promise1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    const number = 5; // You can replace this with any number you want
+    console.log('First Promise resolved with:', number);
+    resolve(number);
+  }, 1000);
+});
+
+// Second Promise: Squares the result of the first promise after 3 seconds
+const promise2 = promise1.then((result) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const squaredNumber = result * result;
+      console.log('Second Promise resolved with:', squaredNumber);
+      resolve(squaredNumber);
+    }, 3000);
+  });
+});
+
+// Third Promise: Squares the result of the second promise after 3 seconds
+const promise3 = promise2.then((result) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const squaredNumber = result * result;
+      console.log('Third Promise resolved with:', squaredNumber);
+      resolve(squaredNumber);
+    }, 3000);
+  });
+});
+
+// Final result
+promise3.then((result) => {
+  console.log('Final Result:', result);
+});
