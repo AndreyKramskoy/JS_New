@@ -345,3 +345,76 @@ function generateUniqueId() {
   return uniqueId;
 }
 console.log(generateUniqueId());
+
+// Задача: ==============Поиск наибольшего общего делителя (НОД) алгоритм Евклида
+function findGCD(a, b) {
+  while (b !== 0) {
+    const remainder = a % b;
+    a = b;
+    b = remainder;
+  }
+  return a;
+}
+console.log(findGCD(8, 12)); // Ожидаемый вывод: 4
+console.log(findGCD(48, 18)); // Ожидаемый вывод: 6
+console.log(findGCD(17, 23)); // Ожидаемый вывод: 1
+
+//Задача: Подсчет гласных букв
+function countVowels(str) {
+  let Vowels = 'aeiouAEIOU';
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (Vowels.indexOf(str[i]) !== -1) {
+      count++;
+    }
+  }
+  return count;
+}
+
+console.log(countVowels('Hello, World!')); // Ожидаемый вывод: 3 (e, o, o)
+console.log(countVowels('This is a test sentence.')); // Ожидаемый вывод: 7 (i, i, a, e, e, e, e)
+console.log(countVowels('')); // Ожидаемый вывод: 0 (пустая строка)
+
+//Задача: Поиск наибольшего элемента в массиве
+function findMax(arr) {
+  let Max = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    if (Max < arr[i]) {
+      Max = arr[i];
+    }
+  }
+  return Max;
+}
+
+console.log(findMax([3, 9, 1, 25, 6])); // Ожидаемый вывод: 25
+console.log(findMax([-10, -2, -8, -1])); // Ожидаемый вывод: -1
+console.log(findMax([])); // Ожидаемый вывод: undefined (пустой массив)
+
+//Задача: Проверка наличия элемента в массиве
+function containsElement(arr, element) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === element) {
+      return true;
+    }
+  }
+  return false;
+}
+
+console.log(containsElement([1, 2, 3, 4, 5], 3)); // Ожидаемый вывод: true
+console.log(containsElement(['apple', 'banana', 'cherry'], 'orange')); // Ожидаемый вывод: false
+console.log(containsElement([], 42)); // Ожидаемый вывод: false (пустой массив)
+
+//Задача: Объединение массивов
+function mergeArrays(arr1, arr2) {
+  // Объединяем оба массива с помощью оператора распространения (spread operator)
+  const mergedArray = [...arr1, ...arr2];
+
+  // Создаем новый Set, который автоматически убирает дубликаты
+  const uniqueArray = [...new Set(mergedArray)];
+
+  return uniqueArray;
+}
+
+console.log(mergeArrays([1, 2, 3], [2, 3, 4])); // Ожидаемый вывод: [1, 2, 3, 4]
+console.log(mergeArrays(['apple', 'banana'], ['cherry', 'banana'])); // Ожидаемый вывод: ['apple', 'banana', 'cherry']
+console.log(mergeArrays([], [42])); // Ожидаемый вывод: [42]
