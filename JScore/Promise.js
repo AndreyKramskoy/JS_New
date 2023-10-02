@@ -114,6 +114,45 @@ const promise3 = promise2.then((result) => {
 promise3.then((result) => {
   console.log('Final Result:', result);
 });
+
+//  with async/await=====================================================
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+async function calculateSquares() {
+  try {
+    // First Promise: Resolves with a number after 1 second
+    const promise1 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const number = 5; // You can replace this with any number you want
+        console.log('First Promise resolved with:', number);
+        resolve(number);
+      }, 1000);
+    });
+
+    // Wait for the first promise to resolve
+    const result1 = await promise1;
+
+    // Second Promise: Squares the result of the first promise after 3 seconds
+    await delay(3000); // Delay for 3 seconds
+    const squaredNumber2 = result1 * result1;
+    console.log('Second Promise resolved with:', squaredNumber2);
+
+    // Third Promise: Squares the result of the second promise after 3 seconds
+    await delay(3000); // Delay for another 3 seconds
+    const squaredNumber3 = squaredNumber2 * squaredNumber2;
+    console.log('Third Promise resolved with:', squaredNumber3);
+
+    // Final result
+    console.log('Final Result:', squaredNumber3);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Вызываем функцию calculateSquares для выполнения всех асинхронных операций
+calculateSquares();
+
 /*
 Давайте подробно разберем код:
 
@@ -172,3 +211,65 @@ promise3.then((result) => {
    - В данном случае, мы просто выводим итоговый квадрат числа в консоль.
 
 Таким образом, весь код создает цепочку трех промиссов, где каждый последующий промисс выполняет операцию над результатом предыдущего и выводит результат в консоль. После завершения всей цепочки операций, вы получите итоговый результат в консоли.*/
+
+new Promise(function (resolve, reject) {
+  resolve(2);
+})
+  .then((result) => {
+    return new Promise(function (resolve, reject) {
+      setTimeout(() => {
+        resolve(result * result);
+        console.log(result);
+      }, 3000);
+    });
+  })
+  .then((result) => {
+    return new Promise(function (resolve, reject) {
+      setTimeout(() => {
+        resolve(result * result);
+        console.log(result);
+      }, 3000);
+    });
+  })
+  // .catch((alert) => {
+  //   return new Promise(function (resolve, reject) {
+  //     setTimeout(() => {
+  //       reject(new Error('Error!'));
+  //       console.log(alert);
+  //     }, 1000);
+  //   });
+  // })
+  .then((result) => {
+    console.log('Final Result:', result);
+  });
+
+//++++++++++++++=====================+++++++++++++++++++
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+function getResult(result) {
+  const squaredResult = result * result;
+  console.log(squaredResult);
+  return squaredResult;
+}
+
+new Promise(function (resolve, reject) {
+  resolve(2);
+})
+  .then((result) => {
+    console.log(result);
+    return result;
+  })
+  .then((result) => {
+    return delay(3000).then(() => getResult(result));
+  })
+  .then((result) => {
+    return delay(3000).then(() => getResult(result));
+  })
+  .then((result) => {
+    console.log('Final Result:', result);
+  })
+  .catch((error) => {
+    console.error('Err:', error);
+  });

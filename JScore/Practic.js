@@ -1,3 +1,26 @@
+const users = [
+  {
+    name: 'John',
+    email: 'John@mail.com',
+  },
+  {
+    name: 'Nick',
+    email: 'Nick84@gmail.com',
+  },
+  {
+    name: 'Alex',
+    email: 'Alex123@gmail.com',
+  },
+  {
+    name: 'Bob',
+    email: 'bb11@mail.com',
+  },
+];
+// Используем метод filter() для фильтрации пользователей с почтой gmail.com
+const gmailUsers = users.filter((user) => user.email.endsWith('gmail.com'));
+console.log(gmailUsers);
+
+//=============================================================
 let ssa = [
   { name: 'a', width: '10', len: '12' },
   { name: 'b', width: '12', len: '14' },
@@ -110,6 +133,22 @@ const sortedWords = words.slice().sort(compareStringLength); // Сортиров
 console.log('Исходный массив:', words);
 console.log('Отсортированный массив:', sortedWords);
 
+//Задача: =======Поиск уникальных элементов в массиве
+function findUniqueElements(arr) {
+  let newArr = []; // Создаем пустой массив для уникальных элементов
+  for (let i = 0; i < arr.length; i++) {
+    // Проверяем, есть ли текущий элемент в уникальном массиве
+    if (newArr.indexOf(arr[i]) === -1) {
+      // Если элемент не найден, добавляем его в уникальный массив
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
+const originalArray = [1, 2, 3, 2, 4, 5, 1, 6];
+const uniqueArray = findUniqueElements(originalArray);
+console.log(uniqueArray); // Ожидаемый результат: [1, 2, 3, 4, 5, 6] (порядок сохранен)
+
 //Задача: =======Фильтрация уникальных элементов
 
 const numbers = [1, 2, 3, 4, 2, 3, 5, 6, 7, 8, 1];
@@ -185,6 +224,7 @@ function findLargestNumber(arr) {
 }
 const numbers6 = [4, 9, 2, 18, 5];
 console.log(findLargestNumber(numbers6)); // Ожидаемый результат: 18
+console.log(Math.max(...numbers6));
 
 //=================Принимает строку и возвращает количество гласных букв (a, e, i, o, u) в этой строке, независимо от регистра (то есть, учитывая как заглавные, так и строчные буквы).
 
@@ -211,22 +251,6 @@ function getSumm(numbers) {
   return positiveNum.reduce((acc, curr) => acc + curr, 0);
 }
 console.log(getSumm(numbers4));
-
-//Задача: =======Поиск уникальных элементов в массиве
-function findUniqueElements(arr) {
-  let newArr = []; // Создаем пустой массив для уникальных элементов
-  for (let i = 0; i < arr.length; i++) {
-    // Проверяем, есть ли текущий элемент в уникальном массиве
-    if (newArr.indexOf(arr[i]) === -1) {
-      // Если элемент не найден, добавляем его в уникальный массив
-      newArr.push(arr[i]);
-    }
-  }
-  return newArr;
-}
-const originalArray = [1, 2, 3, 2, 4, 5, 1, 6];
-const uniqueArray = findUniqueElements(originalArray);
-console.log(uniqueArray); // Ожидаемый результат: [1, 2, 3, 4, 5, 6] (порядок сохранен)
 
 //==============Задача: Вычисление факториала
 
@@ -272,6 +296,13 @@ function isUnick(element, index, arr) {
 const sortWords = Word.filter(isUnick);
 console.log('Исходный массив:', Word);
 console.log('Отсортированный массив:', sortWords);
+
+const Word1 = ['apple', 'banana', 'cherry', 'apple', 'date', 'banana'];
+function isUnick(arr) {
+  return (uniqueWords1 = [...new Set(arr)]);
+}
+console.log('Исходный массив:', Word1);
+console.log('Отсортированный массив:', isUnick(Word1));
 
 //Задача: ==========Подсчет количества слов в строке
 
