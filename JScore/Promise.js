@@ -273,3 +273,45 @@ new Promise(function (resolve, reject) {
   .catch((error) => {
     console.error('Err:', error);
   });
+
+//========================================Задача: Получение случайного числа после задержки
+function getRandomNumberAfterDelay(delay, max) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const randomNumber = Math.floor(Math.random() * max) + 1;
+      if (randomNumber) {
+        resolve(randomNumber);
+      } else {
+        reject(new Error('Failed to generate a random number.'));
+      }
+    }, delay);
+  });
+}
+
+// Пример использования:
+getRandomNumberAfterDelay(2000, 10)
+  .then((number) => {
+    console.log('Random Number:', number);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+//================Задача: Параллельное выполнение задач
+function runParallelTasks(tasks) {
+  return Promise.allSettled(tasks.map((task) => task()));
+}
+
+const tasks = [
+  () => fetch('https://api.example.com/data/1'),
+  () => fetch('https://api.example.com/data/2'),
+  () => fetch('https://api.example.com/data/3'),
+];
+
+runParallelTasks(tasks)
+  .then((results) => {
+    console.log('Results:', results);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
