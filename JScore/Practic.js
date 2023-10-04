@@ -449,3 +449,45 @@ function mergeArrays(arr1, arr2) {
 console.log(mergeArrays([1, 2, 3], [2, 3, 4])); // Ожидаемый вывод: [1, 2, 3, 4]
 console.log(mergeArrays(['apple', 'banana'], ['cherry', 'banana'])); // Ожидаемый вывод: ['apple', 'banana', 'cherry']
 console.log(mergeArrays([], [42])); // Ожидаемый вывод: [42]
+
+//Задача: Фильтрация уникальных элементов
+function getUniqueElements(arr) {
+  let newArr = [];
+  arr.forEach((element) => {
+    if (newArr.indexOf(element) === -1) {
+      newArr.push(element);
+    }
+  });
+  return newArr;
+}
+const originalArray1 = [1, 2, 3, 2, 4, 5, 1, 6];
+const uniqueArray1 = getUniqueElements(originalArray1);
+console.log(uniqueArray1); // Ожидаемый результат: [1, 2, 3, 4, 5, 6] (порядок сохранен)
+
+function findLargestNumber(matrix) {
+  let maxMatrixNum = matrix[0][0];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (maxMatrixNum < matrix[i][j]) {
+        maxMatrixNum = matrix[i][j];
+      }
+    }
+  }
+  return maxMatrixNum;
+}
+const matrix = [
+  [4, 8, 7],
+  [12, 5, 9],
+  [6, 11, 2],
+];
+const largestNumber = findLargestNumber(matrix);
+console.log(largestNumber); // Ожидаемый результат: 12
+
+//=========================Задача: Подсчет количества слов в строке
+function countWords(text1) {
+  let sum = text1.split(/\s+/);
+  return sum.length;
+}
+const text1 = 'Hello, World!';
+const wordCount = countWords(text1);
+console.log(wordCount); // Ожидаемый результат: 2 (Hello, World - 2 слова)
