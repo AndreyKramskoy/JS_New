@@ -416,6 +416,10 @@ function findMax(arr) {
   }
   return Max;
 }
+//можно упростить и использовать функции
+const numbermax = [-10, -2, -8, -1];
+const maxNumber = Math.max(...number);
+console.log(maxNumber);
 
 console.log(findMax([3, 9, 1, 25, 6])); // Ожидаемый вывод: 25
 console.log(findMax([-10, -2, -8, -1])); // Ожидаемый вывод: -1
@@ -459,11 +463,13 @@ function getUniqueElements(arr) {
     }
   });
   return newArr;
+  // return newArr = [...new Set(arr)]; ИЛИ же можно весь код выше записать одной строкой
 }
 const originalArray1 = [1, 2, 3, 2, 4, 5, 1, 6];
 const uniqueArray1 = getUniqueElements(originalArray1);
 console.log(uniqueArray1); // Ожидаемый результат: [1, 2, 3, 4, 5, 6] (порядок сохранен)
 
+//============Задача: Поиск максимального элемента в матрице
 function findLargestNumber(matrix) {
   let maxMatrixNum = matrix[0][0];
   for (let i = 0; i < matrix.length; i++) {
@@ -491,3 +497,30 @@ function countWords(text1) {
 const text1 = 'Hello, World!';
 const wordCount = countWords(text1);
 console.log(wordCount); // Ожидаемый результат: 2 (Hello, World - 2 слова)
+
+//================Задача: Фильтрация и сортировка массива объектов
+function filterAndSortUsers(users1) {
+  const users = users1.filter((item) => item.age >= 30);
+  // Сортируем пользователей по возрасту в порядке возрастания
+  const sortedUsers = users.sort((a, b) => a.age - b.age);
+  return sortedUsers;
+}
+const users1 = [
+  { id: 0, name: 'Chack', age: 33 },
+  { id: 1, name: 'Alice', age: 30 },
+  { id: 2, name: 'Bob', age: 25 },
+  { id: 3, name: 'Charlie', age: 35 },
+  { id: 4, name: 'David', age: 28 },
+];
+const filteredAndSortedUsers = filterAndSortUsers(users1);
+console.log(filteredAndSortedUsers);
+
+//=====================Задача: Подсчет суммы четных чисел в массиве
+function sumOfEvenNumbers(number) {
+  return number
+    .filter((num) => num % 2 === 0)
+    .reduce((acc, num) => acc + num, 0);
+}
+const number = [1, 2, 3, 4, 5, 6];
+const sum = sumOfEvenNumbers(number);
+console.log(sum); // Ожидаемый результат: 12 (сумма чисел 2, 4 и 6)
