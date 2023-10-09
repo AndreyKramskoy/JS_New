@@ -454,7 +454,7 @@ console.log(mergeArrays([1, 2, 3], [2, 3, 4])); // Ожидаемый вывод
 console.log(mergeArrays(['apple', 'banana'], ['cherry', 'banana'])); // Ожидаемый вывод: ['apple', 'banana', 'cherry']
 console.log(mergeArrays([], [42])); // Ожидаемый вывод: [42]
 
-//Задача: Фильтрация уникальных элементов
+//=====Задача: Фильтрация уникальных элементов
 function getUniqueElements(arr) {
   let newArr = [];
   arr.forEach((element) => {
@@ -524,3 +524,79 @@ function sumOfEvenNumbers(number) {
 const number = [1, 2, 3, 4, 5, 6];
 const sum = sumOfEvenNumbers(number);
 console.log(sum); // Ожидаемый результат: 12 (сумма чисел 2, 4 и 6)
+
+//===================================================
+function countWordOccurrences(tex) {
+  const words = tex.split(' ');
+  const wordCounts = {};
+  for (const word of words) {
+    if (wordCounts.hasOwnProperty(word)) {
+      wordCounts[word] += 1;
+    } else {
+      wordCounts[word] = 1;
+    }
+  }
+  return wordCounts;
+}
+const tex = 'apple banana cherry banana apple';
+const wordCounts = countWordOccurrences(tex);
+console.log(wordCounts);
+
+//===========================================
+function findLargestNumber(arr) {
+  return (maxN = Math.max(...arr));
+}
+console.log(findLargestNumber([1, 4, 7, 2, 9])); // Ожидаемый результат: 9
+console.log(findLargestNumber([-3, -8, -2, -1])); // Ожидаемый результат: -1
+console.log(findLargestNumber([5])); // Ожидаемый результат: 5
+
+//=======================
+function filterByLength(wordsArr, length) {
+  let filteredArr = [];
+  for (word of wordsArr) {
+    if (word.length === length) {
+      filteredArr.push(word);
+    }
+  }
+  return filteredArr;
+}
+//можно сократить и использовать метод filter
+// function filterByMinimumLength(arr, length) {
+//   return arr.filter(word => word.length >= length);
+// }
+
+const wordsArr = ['apple', 'banana', 'cherry', 'date', 'elderberry'];
+const filteredWords = filterByLength(wordsArr, 6);
+console.log(filteredWords); // Ожидаемый результат: ['banana', 'cherry']
+
+//============================
+function sortNum(arr) {
+  const sortArr = [...arr];
+  return [...new Set(sortArr.sort((a, b) => a - b))];
+}
+const num = [5, 2, 9, 1, 5, 6];
+const sorted = sortNum(num);
+console.log(sorted); // Ожидаемый результат: [1, 2, 5, 5, 6, 9]
+
+//=============================
+function filterByMinimumLength(arr, length) {
+  let filterdArr = [];
+  for (let word of arr) {
+    if (word.length >= length) {
+      filterdArr.push(word);
+    }
+  }
+  return filterdArr;
+}
+const wor = ['apple', 'banana', 'cherry', 'date', 'elderberry'];
+const filteredWor = filterByMinimumLength(wor, 6);
+console.log(filteredWor); // Ожидаемый результат: ['banana', 'cherry', 'elderberry']
+
+const numb = ['one', 'two', 'three', 'four', 'five'];
+const filteredNum = filterByMinimumLength(numb, 4);
+console.log(filteredNum); // Ожидаемый результат: ['three', 'four', 'five']
+
+//===================
+const originalObject = { name: 'Alice', age: 30 };
+const copyObject = { ...originalObject };
+console.log(copyObject);
