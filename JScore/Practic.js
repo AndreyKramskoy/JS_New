@@ -19,6 +19,14 @@ const users = [
 // Используем метод filter() для фильтрации пользователей с почтой gmail.com
 const gmailUsers = users.filter((user) => user.email.endsWith('gmail.com'));
 console.log(gmailUsers);
+// можно через цикл for
+// const gmailUsers = [];
+// for (const user of users) {
+//   if (user.email.endsWith('gmail.com')) {
+//     gmailUsers.push(user);
+//   }
+// }
+// console.log(gmailUsers);
 
 //=============================================================
 let ssa = [
@@ -600,3 +608,123 @@ console.log(filteredNum); // Ожидаемый результат: ['three', 'f
 const originalObject = { name: 'Alice', age: 30 };
 const copyObject = { ...originalObject };
 console.log(copyObject);
+
+//==================
+function reverseString(str) {
+  if (str.length === 0) {
+    return '';
+  }
+  return (newStr = str.split('').reverse().join(''));
+}
+console.log(reverseString('Hello, World!')); // Ожидаемый результат: "!dlroW ,olleH"
+console.log(reverseString('12345')); // Ожидаемый результат: "54321"
+console.log(reverseString('')); // Ожидаемый результат: ""
+
+//===================
+function findSmallestElement(arr) {
+  return (elem = Math.min(...arr));
+}
+
+console.log(findSmallestElement([34, 56, 1, 32, 99, 5])); // Ожидаемый результат: 1
+console.log(findSmallestElement([-10, -5, 0, 10, 50])); // Ожидаемый результат: -10
+console.log(findSmallestElement([0, 0, 0, 0, 0])); // Ожидаемый результат: 0
+
+//=====================
+function findUniqueElements(arr) {
+  return [...new Set(arr)];
+}
+const origArray = [1, 2, 3, 2, 4, 5, 1, 6];
+const unique = findUniqueElements(origArray);
+console.log(unique); // Ожидаемый результат: [1, 2, 3, 4, 5, 6] (порядок сохранен)
+
+//======================
+function sumEvenIndices(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (i % 2 === 0) {
+      sum += arr[i];
+    }
+  }
+  return sum;
+}
+console.log(sumEvenIndices([10, 20, 30, 40, 50])); // Ожидаемый результат: 90 (10 + 30 + 50)
+console.log(sumEvenIndices([1, 2, 3, 4, 5, 6, 7, 8])); // Ожидаемый результат: 16 (1 + 3 + 5 + 7)
+console.log(sumEvenIndices([])); // Ожидаемый результат: 0 (пустой массив)
+
+//====================
+function mergeArrays(a, b) {
+  let merge = [...a, ...b];
+  return merge.sort((a, b) => a - b);
+}
+const arr1 = [1, 3, 5, 7];
+const arr2 = [2, 4, 6, 8];
+const merged = mergeArrays(arr1, arr2);
+console.log(merged); // Ожидаемый результат: [1, 2, 3, 4, 5, 6, 7, 8]
+
+const arr3 = [5, 10, 15];
+const arr4 = [3, 6, 9];
+const merged2 = mergeArrays(arr3, arr4);
+console.log(merged2); // Ожидаемый результат: [3, 5, 6, 9, 10, 15]
+
+//===================Задача: Нахождение пересечения массивов
+function findIntersection(arrA, arrB) {
+  let cutArr = [];
+  for (let i = 0; i < arrA.length; i++) {
+    for (let j = 0; j < arrB.length; j++) {
+      if (arrA[i] === arrB[j]) {
+        cutArr.push(arrA[i]);
+      }
+    }
+  }
+  return cutArr;
+}
+//КОРОТКИЙ ВАРИАНТ РЕШЕНИЯ
+function findIntersection(arrA, arrB) {
+  const setA = new Set(arrA);
+  const setB = new Set(arrB);
+
+  const intersection = [...setA].filter((item) => setB.has(item));
+  return intersection;
+}
+
+const arr5 = [1, 2, 3, 4, 5];
+const arr6 = [3, 4, 5, 6, 7];
+const result1 = findIntersection(arr5, arr6);
+console.log(result1); // Ожидаемый результат: [3, 4, 5]
+
+const arr7 = [10, 20, 30, 40];
+const arr8 = [30, 40, 50, 60];
+const result2 = findIntersection(arr7, arr8);
+console.log(result2); // Ожидаемый результат: [30, 40]
+
+const arr9 = [1, 2, 3];
+const arr10 = [4, 5, 6];
+const result3 = findIntersection(arr9, arr10);
+console.log(result3); // Ожидаемый результат: []
+
+//==============
+function countVowels(str) {
+  let Vowels = 'aeiouAEIOU';
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (Vowels.indexOf(str[i]) !== -1) {
+      count++;
+    }
+  }
+  return count;
+}
+//МОЖНО СОКРАТИТЬ
+function countVowels(str) {
+  const vowels = 'aeiouAEIOU';
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (vowels.includes(str[i])) {
+      count++;
+    }
+  }
+  return count;
+}
+
+console.log(countVowels('Hello, World!')); // Ожидаемый результат: 3 (e, o, o - гласные)
+console.log(countVowels('JavaScript is awesome')); // Ожидаемый результат: 8 (a, i, a, i, e, o, e, a - гласные)
+console.log(countVowels('Why?')); // Ожидаемый результат: 0 (нет гласных)
