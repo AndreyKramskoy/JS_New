@@ -1,5 +1,5 @@
 // контекст. this всегда указывает на тот объект в контексте которого была вызвана функция
-//например функция sayHello при вызове в person (person.sayHello) вернет в консоль 'Hello' и this в виведе полей объекта person
+//например функция sayHello при вызове в person (person.sayHello) вернет в консоль 'Hello' и this в виде полей объекта person
 function hello() {
   console.log('Hello', this);
 }

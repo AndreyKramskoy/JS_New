@@ -92,3 +92,33 @@ async function fetchAsyncTodos() {
   }
 }
 fetchAsyncTodos(); // для этого нам просто нужно вызвать созданный метод
+
+//==================================================================================
+// 1-й промис
+const getToast = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Ваш тост готов!');
+    }, 1000);
+  });
+};
+// 2-й промис
+const getCoffee = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Ваш кофе готов!');
+    }, 2000);
+  });
+};
+// Ставим слово async
+const breakfast = async function () {
+  // Указываем await
+  const toast = await getToast();
+  // Указываем await
+  const coffee = await getCoffee();
+  // Получаем результат обоих промисов
+  const [myToast, myCoffee] = await Promise.all([toast, coffee]);
+  console.log(myToast, myCoffee);
+  // Ваш тост готов! Ваш кофе готов! (через 2сек)
+};
+breakfast();

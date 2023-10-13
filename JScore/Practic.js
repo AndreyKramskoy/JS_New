@@ -728,3 +728,43 @@ function countVowels(str) {
 console.log(countVowels('Hello, World!')); // Ожидаемый результат: 3 (e, o, o - гласные)
 console.log(countVowels('JavaScript is awesome')); // Ожидаемый результат: 8 (a, i, a, i, e, o, e, a - гласные)
 console.log(countVowels('Why?')); // Ожидаемый результат: 0 (нет гласных)
+
+//============
+function findAverage(arr) {
+  if (arr.length === 0) {
+    return 0;
+  }
+  return arr.reduce((acc, curr) => acc + curr, 0) / arr.length;
+}
+console.log(findAverage([1, 2, 3, 4, 5])); // Ожидаемый результат: 3
+console.log(findAverage([10, 20, 30, 40, 50])); // Ожидаемый результат: 30
+console.log(findAverage([0, 0, 0, 0, 0])); // Ожидаемый результат: 0
+
+//===============
+function sumFibonacciNumbers(limit) {
+  let fibonacci = [1, 1]; // Начальные два числа Фибоначчи
+  // Начнем с третьего числа Фибоначчи и продолжим до тех пор, пока текущее число меньше или равно заданному пределу
+  while (
+    fibonacci[fibonacci.length - 1] + fibonacci[fibonacci.length - 2] <=
+    limit
+  ) {
+    fibonacci.push(
+      fibonacci[fibonacci.length - 1] + fibonacci[fibonacci.length - 2]
+    );
+  }
+  // Используем метод reduce для нахождения суммы всех чисел в массиве
+  const sum = fibonacci.reduce((acc, curr) => acc + curr, 0);
+  return sum;
+}
+console.log(sumFibonacciNumbers(10)); // Ожидаемый результат: 23 (1 + 1 + 2 + 3 + 5 + 8)
+console.log(sumFibonacciNumbers(25)); // Ожидаемый результат: 72 (1 + 1 + 2 + 3 + 5 + 8 + 13 + 21)
+console.log(sumFibonacciNumbers(5)); // Ожидаемый результат: 7 (1 + 1 + 2 + 3)
+//===============
+function capitalizeWords(str) {
+  return (arrStr = str
+    .split(' ')
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(1).toLowerCase())
+    .join(' '));
+}
+console.log(capitalizeWords('hello world')); // Ожидаемый результат: 'Hello World'
+console.log(capitalizeWords('my name is john doe')); // Ожидаемый результат: 'My Name Is John Doe'
