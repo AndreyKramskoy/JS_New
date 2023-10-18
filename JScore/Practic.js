@@ -768,3 +768,39 @@ function capitalizeWords(str) {
 }
 console.log(capitalizeWords('hello world')); // Ожидаемый результат: 'Hello World'
 console.log(capitalizeWords('my name is john doe')); // Ожидаемый результат: 'My Name Is John Doe'
+//================
+function doubleEvenNumbers(arr) {
+  return arr.map((num) => (num % 2 === 0 ? num * 2 : num));
+}
+const numbers8 = [1, 2, 3, 4, 5, 6];
+const doubledNumbers = doubleEvenNumbers(numbers8);
+console.log(doubledNumbers); // Ожидаемый результат: [1, 4, 3, 8, 5, 12]
+//==================
+function reverseWords(str) {
+  let revStr = str.split(' ');
+  return revStr.map((word) => word.split('').reverse().join('')).join(' ');
+}
+console.log(reverseWords('Hello, World!')); // Ожидаемый результат: 'olleH, !dlroW'
+console.log(reverseWords('JavaScript is awesome')); // Ожидаемый результат: 'tpircSavaJ si emosewa'
+console.log(reverseWords('OpenAI is amazing')); // Ожидаемый результат: 'NIAepO si gnizama'
+//=======
+function isPalindrome(str) {
+  let newStr = str.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+  if (newStr === newStr.split('').reverse().join('')) {
+    return true;
+  } else {
+    return false;
+  }
+}
+console.log(isPalindrome('level')); // true
+console.log(isPalindrome('algorithm')); // false
+console.log(isPalindrome('A man, a plan, a canal, Panama')); // true
+//===================
+function pow(x, n) {
+  if (n == 1) {
+    return x;
+  } else {
+    return x * pow(x, n - 1);
+  }
+}
+console.log(pow(2, 3)); // 8

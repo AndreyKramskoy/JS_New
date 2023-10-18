@@ -315,3 +315,114 @@ runParallelTasks(tasks)
   .catch((error) => {
     console.error('Error:', error);
   });
+//====================Вывод приветсвия после задержки
+function delayedGreeting(name, delay) {
+  return new Promise((resolve, reject) =>
+    delay < 0
+      ? reject('Error')
+      : setTimeout(() => {
+          resolve(`Hello ${name}`);
+        }, delay)
+  );
+}
+delayedGreeting('Andrey', 2000)
+  .then((greeting) => {
+    console.log(greeting); // Должен вывести 'Hello, Alice!' через 2 секунды
+  })
+  .catch((error) => {
+    console.error(error); // Выведет ошибку, если delay отрицательный
+  });
+//=====================
+function checkNumber(num) {
+  return new Promise((resolve, reject) => {
+    if (num >= 10) {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    } else {
+      reject();
+    }
+  });
+}
+checkNumber(25)
+  .then(() => console.log('Число меньше 10'))
+  .catch(() => console.error('Число больше или равно 10'));
+checkNumber(1)
+  .then(() => console.log('Число меньше 10'))
+  .catch(() => console.error('Число больше или равно 10'));
+//////////// ИЛИ С async await
+async function checkAndPrint(num) {
+  try {
+    await checkNumber(num);
+    console.log('Число меньше 10');
+  } catch (err) {
+    console.error('Число больше или равно 10');
+  }
+}
+checkAndPrint(25);
+checkAndPrint(1);
+//===========================
+// Пример использования публичного API для получения данных пользователя
+function fetchUserData(userId) {
+  return new Promise((resolve, reject) => {
+    fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+      .then((response) => response.json())
+      .then((data) => resolve(data))
+      .catch((error) => reject(error));
+  });
+}
+// Использование функции
+fetchUserData(1)
+  .then((userData) => console.log(userData))
+  .catch((error) => console.error(error));
+// с использованием async/await:
+async function fetchUserData(userId) {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/users/${userId}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+async function displayUserData(userId) {
+  try {
+    const userData = await fetchUserData(userId);
+    console.log('User Data:', userData);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+displayUserData(1);
+//=================Функция должна возвращать промис, который разрешается строкой в верхнем регистре
+function delayedUpperCase(str, ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const strToUpperCase = str.toUpperCase();
+      if (strToUpperCase) {
+        resolve(strToUpperCase);
+      } else {
+        reject(err);
+      }
+    }, ms);
+  });
+}
+delayedUpperCase('hello', 2000)
+  .then((result) => {
+    console.log(result); // Ожидаемый результат: 'HELLO' (выводится через 2 секунды)
+  })
+  .catch((error) => {
+    console.error('Произошла ошибка:', error);
+  });
+//
+async function delayedUpperCaseAsync(str, ms) {
+  try {
+    const result = await delayedUpperCase(str, ms);
+    console.log(result);
+  } catch (error) {
+    console.error('Произошла ошибка:', error);
+  }
+}
+delayedUpperCaseAsync('hello', 2000);
