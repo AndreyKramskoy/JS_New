@@ -12,10 +12,21 @@ const users = [
     email: 'Alex123@gmail.com',
   },
   {
-    name: 'Bob',
+    name: 'Boba',
     email: 'bb11@mail.com',
   },
 ];
+// Используем метод filter() для фильтрации
+const keyword = 'A'; // Извлечение ключевого слова фильтрации в переменную
+const filteredUsers = users.filter((user) =>
+  user.name.toLowerCase().includes(keyword.toLowerCase())
+);
+console.log(filteredUsers);
+//=====++++// Используем метод filter() для фильтрации
+const usersFilt = users.filter(
+  (user) => user.name.includes('A') || user.name.includes('a')
+);
+console.log(usersFilt);
 // Используем метод filter() для фильтрации пользователей с почтой gmail.com
 const gmailUsers = users.filter((user) => user.email.endsWith('gmail.com'));
 console.log(gmailUsers);
@@ -83,10 +94,7 @@ let str = '12345';
 let str2 = '12321';
 let strin = (st) => st === st.split('').reverse().join('');
 console.log(strin(str));
-console.log(isPalindrom(str2));
-console.log(isPalindrom(str));
-console.log(isPalindrom(str2));
-
+console.log(strin(str2));
 //Задача ========Проверить является ли сложная строка палиндромом
 
 const phrase1 = 'A man, a plan, a canal, Panama!';
@@ -804,3 +812,68 @@ function pow(x, n) {
   }
 }
 console.log(pow(2, 3)); // 8
+//=======
+function findIndex(arr, num) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === num) {
+      return i;
+    }
+  }
+  return -1;
+}
+arrN = [1, 5, 7, 3, 44, 66, 88, 33, 5, 0];
+console.log(findIndex(arrN, 3));
+//=============
+let findUniqueElements = (arr) => [...new Set([...arr])];
+const origi = [1, 2, 3, 2, 4, 5, 1, 6];
+const uniq = findUniqueElements(origi);
+console.log(uniq); // Ожидаемый результат: [1, 2, 3, 4, 5, 6] (порядок сохранен)
+//======
+const obj1 = { a: 1, a: 2 };
+const obj2 = { a: 3, a: 4 };
+//const combined = { ...obj1, ...obj2 };
+const combined = Object.assign({}, obj1, obj2);
+console.log(combined); //{ a: 4 }
+//=====================
+
+let ssaArr = [{ sideLength: 3 }, { sideLength: 7 }, { sideLength: 8 }];
+let getSquare = ssaArr.map((item) => item.sideLength * 4);
+console.log(getSquare);
+//============
+
+let ssA = [
+  { sideLength: 7 },
+  { sideLength: 13 },
+  { sideLength: 17 },
+  { sideLength: 17 },
+  { sideLength: 16 },
+];
+let getNewObject = ssA.map((item) => {
+  let square = item.sideLength * 4;
+  let perimeter = item.sideLength * item.sideLength;
+  return {
+    sideLength: item.sideLength,
+    square: square,
+    perimeter: perimeter,
+  };
+});
+console.log(getNewObject);
+//========================= Задача: Форматирование номера телефона
+function formatPhoneNumber(phoneNumber) {
+  const areaCode = phoneNumber.substring(0, 3);
+  const firstPart = phoneNumber.substring(3, 6);
+  const secondPart = phoneNumber.substring(6, 10);
+  return `(${areaCode}) ${firstPart}-${secondPart}`;
+}
+console.log(formatPhoneNumber('1234567890')); // Ожидаемый результат: "(123) 456-7890"
+//=======================
+function reverseString(string) {
+  let elemOfString = string.split(' ');
+  return elemOfString
+    .map((word) => word.split('').reverse().join(''))
+    .reverse()
+    .join(' ');
+}
+console.log(reverseString('Hello, World!')); // Ожидаемый результат: '!dlroW ,olleH'
+console.log(reverseString('12345')); // Ожидаемый результат: '54321'
+console.log(reverseString('')); // Ожидаемый результат: ''

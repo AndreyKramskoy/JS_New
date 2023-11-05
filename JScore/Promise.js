@@ -231,17 +231,49 @@ new Promise(function (resolve, reject) {
       }, 3000);
     });
   })
-  // .catch((alert) => {
-  //   return new Promise(function (resolve, reject) {
-  //     setTimeout(() => {
-  //       reject(new Error('Error!'));
-  //       console.log(alert);
-  //     }, 1000);
-  //   });
-  // })
+  .catch((alert) => {
+    return new Promise(function (resolve, reject) {
+      setTimeout(() => {
+        reject(new Error('Error!'));
+        console.log(alert);
+      }, 1000);
+    });
+  })
   .then((result) => {
     console.log('Final Result:', result);
   });
+//================================== with async/await
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function calculate() {
+  try {
+    const result1 = await new Promise(function (resolve, reject) {
+      resolve(2);
+    });
+
+    const result2 = await new Promise(function (resolve, reject) {
+      return delay(3000).then(() => {
+        resolve(result1 * result1);
+        console.log(result1);
+      });
+    });
+
+    const result3 = await new Promise(function (resolve, reject) {
+      return delay(3000).then(() => {
+        resolve(result2 * result2);
+        console.log(result2);
+      });
+    });
+
+    console.log('Final Result:', result3);
+  } catch (error) {
+    console.error('Error!', error);
+  }
+}
+
+calculate();
 
 //++++++++++++++=====================+++++++++++++++++++
 
