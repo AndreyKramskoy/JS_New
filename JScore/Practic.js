@@ -877,3 +877,140 @@ function reverseString(string) {
 console.log(reverseString('Hello, World!')); // Ожидаемый результат: '!dlroW ,olleH'
 console.log(reverseString('12345')); // Ожидаемый результат: '54321'
 console.log(reverseString('')); // Ожидаемый результат: ''
+
+//==== Задача: Сумма чисел с четными индексами
+function sumEvenIndices(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i += 2) {
+    sum += arr[i];
+  }
+  return sum;
+  // return arr.reduce((acc, curr, index) => index % 2 === 0 ? acc + curr : acc, 0); или так!!!
+}
+const nu = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(sumEvenIndices(nu)); // Ожидаемый результат: 25 (1 + 3 + 5 + 7 + 9)
+
+// =============Задача: Найти сумму четных элементов массива
+function sumEvenNumbers(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] % 2 == 0) {
+      sum += arr[i];
+    }
+  }
+  return sum;
+  // можно улучшить код и записать так
+  //return arr.reduce((sum, num) => (num % 2 === 0 ? sum + num : sum), 0);
+}
+const n = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(sumEvenNumbers(n)); // Ожидаемый результат: 20 (2 + 4 + 6 + 8)
+
+//=======Задача: Поиск уникальных элементов
+
+function findUniqueElements(elem, index, arr) {
+  return arr.indexOf(elem) === arr.lastIndexOf(elem);
+}
+const arr = [1, 2, 3, 2, 4, 5, 1, 6];
+const uni = arr.filter(findUniqueElements);
+console.log(uni); // Ожидаемый результат: [3, 4, 5, 6] (порядок сохранен)
+//  ИЛИ c использованием Мар
+function findUniqueElements(ar) {
+  const countMap = new Map();
+  ar.forEach((elem) => {
+    countMap.set(elem, (countMap.get(elem) || 0) + 1);
+  });
+
+  return ar.filter((elem) => countMap.get(elem) === 1);
+}
+const ar = [1, 2, 3, 2, 4, 5, 1, 6];
+const uni1 = findUniqueElements(ar);
+console.log(uni1); // Ожидаемый результат: [3, 4, 5, 6] (порядок сохранен)
+
+//==Задача: Проверка на анаграмму
+
+function isAnagram(str1, str2) {
+  const prepareString = (str) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const countCharacters = (str) => {
+    const charCount = {};
+    for (let char of str) {
+      charCount[char] = (charCount[char] || 0) + 1;
+    }
+    return charCount;
+  };
+  const cleanStr1 = prepareString(str1);
+  const cleanStr2 = prepareString(str2);
+  const charCount1 = countCharacters(cleanStr1);
+  const charCount2 = countCharacters(cleanStr2);
+  if (Object.keys(charCount1).length !== Object.keys(charCount2).length) {
+    return false;
+  }
+  for (let char in charCount1) {
+    if (charCount1[char] !== charCount2[char]) {
+      return false;
+    }
+  }
+  return true;
+}
+console.log(isAnagram('listen', 'silent')); // Ожидаемый результат: true
+console.log(isAnagram('hello', 'bye')); // Ожидаемый результат: false
+console.log(isAnagram('rail safety', 'fairy tales')); // Ожидаемый результат: true
+
+//==============Задача: Подсчет уникальных букв в строке
+function countUniqueLetters(str){
+  let cleanString=str.toLowerCase().replace(/[^a-z0-9]/g, '')
+  let countLetters={}
+  for (let char of cleanString){
+    countLetters[char] = (countLetters[char] || 0)+1
+  }
+  return countLetters
+}
+console.log(countUniqueLetters('hello')); 
+// Ожидаемый результат: { h: 1, e: 1, l: 2, o: 1 }
+console.log(countUniqueLetters('testing'));
+// Ожидаемый результат: { t: 2, e: 1, s: 1, i: 1, n: 1, g: 1 }
+
+//==========Задача: Подсчет количества уникальных слов
+
+function countUniqueWords(str){
+  let newStr = str.toLowerCase().match(/\b\w+(?:'\w+)?\b/g);// пояснение выражения смотри ниже
+  let uniqueWords={}
+  for(let word of newStr){
+    uniqueWords[word]=(uniqueWords[word] || 0)+1
+  }
+  return uniqueWords
+}
+console.log(countUniqueWords('Hello world world!')); 
+// Ожидаемый результат: { hello: 1, world: 2 }
+console.log(countUniqueWords(`JavaScript is great, isn't it? JavaScript is awesome!`)); 
+// Ожидаемый результат: { javascript: 2, is: 2, great: 1, isn't: 1, it: 1, awesome: 1 }
+
+/*
+Конечно, давай посмотрим на составляющие регулярного выражения \b\w+(?:'\w+)?\b:
+\b - это якорь, обозначающий границу слова. \b соответствует позиции между символами слова (то есть, между символом слова и пробелом, символом слова и началом строки, символом слова и концом строки и так далее).
+\w+ - это символьный класс, который соответствует одному или более буквенно-цифровым символам. \w соответствует символам алфавита (a-z, A-Z), цифрам (0-9) и символу подчеркивания (_). + обозначает, что предыдущий элемент должен повторяться один или более раз.
+(?: ... ) - это не захватывающая группа. В данном случае, '(?:'\w+)' позволяет обрабатывать апострофы внутри слов, не сохраняя их как отдельные совпадения.
+'\w+' - это снова символьный класс, который соответствует одному или более буквенно-цифровым символам после апострофа.
+? - обозначает, что предыдущий элемент (в данном случае, группа '(?:'\w+)') является необязательным.
+\b - якорь границы слова, такой же как в начале выражения, обозначает конец слова.
+*/
+
+//=======Задача: Подсчет количества гласных букв
+function countVowels(str){
+  let vowels = 'aeiou'
+  let count = 0
+  let result=[]
+  for(let i=0;i<str.length;i++){
+    if(vowels.toLowerCase().includes(str[i])){
+      count++
+      result.push(str[i])
+    }
+     }
+     if (count > 0){
+      return `${count} шт. ${result} - гласные`
+    }else{
+      return count + '- нет гласных'
+    }
+}
+console.log(countVowels('Hello, World!')); // Ожидаемый результат: 3 (e, o, o - гласные)
+console.log(countVowels('JavaScript is awesome')); // Ожидаемый результат: 8 (a, i, a, i, e, o, e, a - гласные)
+console.log(countVowels('Why?')); // Ожидаемый результат: 0 (нет гласных)
