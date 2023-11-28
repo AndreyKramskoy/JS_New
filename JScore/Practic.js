@@ -1014,3 +1014,62 @@ function countVowels(str){
 console.log(countVowels('Hello, World!')); // Ожидаемый результат: 3 (e, o, o - гласные)
 console.log(countVowels('JavaScript is awesome')); // Ожидаемый результат: 8 (a, i, a, i, e, o, e, a - гласные)
 console.log(countVowels('Why?')); // Ожидаемый результат: 0 (нет гласных)
+
+//=======Задача: Сумма уникальных чисел
+function sumUnique(arr){
+  const unique = [];
+  let count=0
+for(let i=0; i<arr.length;i++){
+  if(arr.indexOf(arr[i])===arr.lastIndexOf(arr[i])){
+    count+=arr[i]
+    unique.push(arr[i]);
+  }
+}
+console.log('Уникальные числа:', unique);
+return count
+}
+console.log(sumUnique([1, 2, 3, 2, 4, 5, 1, 6])); 
+console.log(sumUnique([-3, 0, 3, -3, 3, 5, 5, -3])); 
+
+//======Задача: Уникальная пара
+function findUniquePair(arr, target) {
+  // Создаем объект для хранения элементов массива, которые мы уже встретили
+  const seen = {};
+  // Проходимся по элементам массива
+  for (let i = 0; i < arr.length; i++) {
+    // Вычисляем разницу между целевым числом и текущим элементом
+    const diff = target - arr[i];
+    // Проверяем, была ли уже такая разница в предыдущих элементах массива
+    if (seen[diff] !== undefined) {
+      // Если да, значит, у нас есть уникальная пара
+      // Возвращаем эту пару (элемент diff и текущий элемент)
+      return [diff, arr[i]];
+    }
+    // Добавляем текущий элемент в объект seen
+    seen[arr[i]] = i;
+  }
+  // Если не было найдено уникальной пары, возвращаем пустой массив
+  return [];
+}
+console.log(findUniquePair([1, 2, 3, 4, 5], 8)); // Ожидаемый результат: [3, 5]
+console.log(findUniquePair([1, 2, 3, 4, 5], 10)); // Ожидаемый результат: []
+console.log(findUniquePair([3, 4, 5, 6, 7], 13)); // Ожидаемый результат: [6, 7]
+
+//===== Задача: Найти самое часто встречающееся число в массиве
+function findMostFrequent(arr){
+  let frequentNum
+  let countMax=0
+  let count={}
+for(let num of arr){
+  count[num]=(count[num] || 0)+1
+  if(count[num]>countMax){
+    countMax=count[num]
+    frequentNum=num
+  }
+}
+return frequentNum
+}
+console.log(findMostFrequent([1, 3, 1, 3, 2, 1])); // Ожидаемый результат: 1
+console.log(findMostFrequent([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5])); // Ожидаемый результат: 5
+console.log(findMostFrequent([1, 2, 3, 4, 5])); // Ожидаемый результат: любое из чисел в массиве, так как каждое число встречается один раз
+
