@@ -1028,6 +1028,11 @@ for(let i=0; i<arr.length;i++){
 console.log('Уникальные числа:', unique);
 return count
 }
+//ИЛИ
+function sumUniqueNumbers(arr) {
+  const uniqueNumbers = [...new Set(arr)];
+  return uniqueNumbers.reduce((sum, num) => sum + num, 0);
+}
 console.log(sumUnique([1, 2, 3, 2, 4, 5, 1, 6])); 
 console.log(sumUnique([-3, 0, 3, -3, 3, 5, 5, -3])); 
 
@@ -1073,3 +1078,32 @@ console.log(findMostFrequent([1, 3, 1, 3, 2, 1])); // Ожидаемый рез�
 console.log(findMostFrequent([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5])); // Ожидаемый результат: 5
 console.log(findMostFrequent([1, 2, 3, 4, 5])); // Ожидаемый результат: любое из чисел в массиве, так как каждое число встречается один раз
 
+//============Задача: Подсчёт количества вхождений слова в строку
+function countOccurrences(str, word) {
+  const regex = new RegExp(word, 'gi');
+  const matches = str.match(regex);
+  return matches ? matches.length : 0;
+}
+console.log(countOccurrences('Hello hello hello world', 'hello')); // Ожидаемый результат: 3
+console.log(countOccurrences('The quick brown fox', 'Fox')); // Ожидаемый результат: 1
+console.log(countOccurrences('JavaScript JavaScript is fun', 'javaScript')); // Ожидаемый результат: 2
+
+//=========Задача: Подсчет количества уникальных символов
+function countUniqueCharacters(str){
+  const uniqueChars = new Set(str);
+  return uniqueChars.size; //Метод доступа size возвращает количество (уникальных) элементов в объекте Set
+}
+console.log(countUniqueCharacters('Hello, World!')); // Ожидаемый результат: 10
+console.log(countUniqueCharacters('openAI')); // Ожидаемый результат: 6
+console.log(countUniqueCharacters('AAAAAaaaa')); // Ожидаемый результат: 2
+
+// ============== Задача: Проверка на анаграмму
+function areAnagrams(str1, str2) {
+  const cleanStr1 = str1.replace(/[^a-zA-Z]/g, '').toLowerCase().split('').sort().join('');
+  const cleanStr2 = str2.replace(/[^a-zA-Z]/g, '').toLowerCase().split('').sort().join('');
+  
+  return cleanStr1 === cleanStr2;
+}
+console.log(areAnagrams('listen', 'silent')); // Ожидаемый результат: true
+console.log(areAnagrams('hello', 'bye')); // Ожидаемый результат: false
+console.log(areAnagrams('rail safety', 'fairy tales')); // Ожидаемый результат: true

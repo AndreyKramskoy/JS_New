@@ -5,7 +5,7 @@ const date = new Date(2023, 8, 12, 14, 41, 00) - можно через , ука�
 getFullYear и прочие get позволяют получить значение
 setFullYear и прочие set позволяют задать значение
 toDateString - позволяет вывести дату преобразовав в String
-toTimeString - время 
+toTimeString - время
 и тд
 toLocalDateString - позволяет вывести дату в ФОРМАТЕ ЛОКАЛЬНОМ преобразовав в String
 */
@@ -16,3 +16,13 @@ console.log(now.getDate());
 // и тд по мин сек и проч
 now.setFullYear(2500);
 console.log(now);
+
+function time(){
+    const currentDate = new Date();
+    // const year = currentDate.getUTCFullYear();
+    // const month = String(currentDate.getUTCMonth() + 1).padStart(2, '0');
+    // const day = String(currentDate.getUTCDate()).padStart(2, '0');
+    return currentDate.toISOString()//`${year}-${month}-${day}T00:00:00.000Z`;
+
+}
+console.log(time())
