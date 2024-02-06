@@ -1107,3 +1107,198 @@ function areAnagrams(str1, str2) {
 console.log(areAnagrams('listen', 'silent')); // Ожидаемый результат: true
 console.log(areAnagrams('hello', 'bye')); // Ожидаемый результат: false
 console.log(areAnagrams('rail safety', 'fairy tales')); // Ожидаемый результат: true
+
+function sumUnique(arr){
+  let uniqueArr = [...new Set (arr)]
+  return sum = uniqueArr.reduce((acc, cur)=>acc + cur,0)
+}
+console.log(sumUnique([1, 2, 2, 3, 4, 4, 5, 6, 6])); // Ожидаемый результат: 21 (1 + 3 + 5 + 6 = 15)
+console.log(sumUnique([1, 2, 3, 4, 5])); // Ожидаемый результат: 15 (все элементы уникальны)
+console.log(sumUnique([1, 1, 1, 1, 1])); // Ожидаемый результат: 1 (только один уникальный элемент)
+
+//===========Задача: Найти разницу между суммой четных и нечетных чисел в массиве
+function findEvenOddDifference(arr){
+  let evenSum = 0;
+    let oddSum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] % 2 === 0) {
+            evenSum += arr[i];
+        } else {
+            oddSum += arr[i];
+        }
+    }
+    return evenSum - oddSum;
+}
+console.log(findEvenOddDifference([1, 2, 3, 4, 5]));
+console.log(findEvenOddDifference([3, 5, 7, 9]));
+console.log(findEvenOddDifference([2, 4, 6, 8]));
+
+function sumNestedArrays(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[i].length; j++) {
+          sum += arr[i][j];
+      }
+  }
+  return sum;
+}
+console.log(sumNestedArrays([[1, 2, 3], [4, 5], [6]])); // Ожидаемый результат: 21
+console.log(sumNestedArrays([[10, 20], [30], [40, 50, 60]])); // Ожидаемый результат: 210
+console.log(sumNestedArrays([[2], [4], [6], [8], [10]])); // Ожидаемый результат: 30
+
+
+//================= Задача: Подсчет гласных
+function countVowels(str) {
+  const vowelRegex = /[aeiouAEIOU]/g;
+  const matches = str.match(vowelRegex);
+  return matches ? matches.length : 0;
+}
+console.log(countVowels("Hello, World!")); 
+console.log(countVowels("JavaScript")); 
+console.log(countVowels("OpenAI GPT")); 
+
+//================= Задача: Перевернуть слова в строке без изменения порядка слов
+function reverseWordsInString(str){
+  let strArr = str.split(' ')
+  let newStrArr = strArr.map((el)=>el.split('').reverse().join(''))
+  return newStrArr.join(' ')
+}
+console.log(reverseWordsInString("Hello, World!")); // Ожидаемый результат: "olleH, dlroW!"
+console.log(reverseWordsInString("JavaScript is amazing")); // Ожидаемый результат: "tpircSavaJ si gnizama"
+console.log(reverseWordsInString("OpenAI GPT-3 is fascinating")); // Ожидаемый результат: "NAepO TPG-3 si gnitatsissafa"
+
+//================Задача: Поиск отсутствующего числа в массиве
+function findMissingNumber(arr){
+  let numbers = []
+  for (let i=1;i<=arr.length + 1;i++){
+    if(arr.indexOf(i) === -1){
+      numbers.push(i)
+    }
+  }
+  return numbers
+}
+console.log(findMissingNumber([1, 3, 4, 5])); // Ожидаемый результат: 2
+console.log(findMissingNumber([2, 4, 1, 6, 3, 7, 8, 10])); // Ожидаемый результат: 5
+console.log(findMissingNumber([1, 2, 3, 4, 5, 7, 8, 9, 10])); // Ожидаемый результат: 6
+
+//=================Задача: Минимальное и максимальное значение
+function findMinMax(arr){
+  let min = Math.min(...arr)
+  let max = Math.max(...arr)
+  return `min:${min} max:${max}`
+}
+console.log(findMinMax([3, 1, 9, 0, -2, 7])); 
+// Ожидаемый результат:  min: -2, max: 9
+console.log(findMinMax([10, 5, 2, 8, -1])); 
+// Ожидаемый результат:  min: -1, max: 10 
+
+//================Задача: Подсчет уникальных слов в строке
+function countUniqueWords(str) {
+  let lowerCaseStr = str.toLowerCase().split(' ');
+  let uniqueWords = {};
+  for (let i = 0; i < lowerCaseStr.length; i++) {
+    // Используем слово в качестве ключа в объекте uniqueWords
+    uniqueWords[lowerCaseStr[i]] = true;
+    console.log(uniqueWords)
+  }
+  // Возвращаем количество уникальных слов (количество ключей в объекте)
+  return Object.keys(uniqueWords).length;
+}
+console.log(countUniqueWords("Hello world world World"));
+// Ожидаемый результат: 2 (так как "world" и "World" считаются одним уникальным словом)
+
+function countUniqueWords(str) {
+  let lowerCaseStr = str.toLowerCase().split(' ');
+  let uniqWords = [...new Set(lowerCaseStr)]
+  return uniqWords.length
+}
+console.log(countUniqueWords("Hello world world World"));
+//=============================================================
+
+//===========Задача: Поиск максимального произведения двух чисел
+function maxProduct(arr) {
+  let max1 = Number.MIN_SAFE_INTEGER;
+  let max2 = Number.MIN_SAFE_INTEGER;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > max1) {
+      max2 = max1;
+      max1 = arr[i];
+    } else if (arr[i] > max2) {
+      max2 = arr[i];
+    }
+    console.log(max1, max2)
+  }
+  return max1 * max2;
+}
+console.log(maxProduct([2, 3, 4, 5, 1])); 
+// Ожидаемый результат: 20 (произведение 4 и 5)
+console.log(maxProduct([-2, 0, -1, 3, 5])); 
+// Ожидаемый результат: 15 (произведение -3 и -5)
+
+//=================================Задача: Самая длинная подстрока без повторяющихся символов
+function longestSubstring(s) {
+  let maxLength = 0;
+  let start = 0;
+  let charIndexMap = {};
+  for (let end = 0; end < s.length; end++) {
+    let currentChar = s[end];
+    if (charIndexMap[currentChar] !== undefined && charIndexMap[currentChar] >= start) {
+      // Если символ уже встречался и его индекс находится в текущем подстроке,
+      // обновляем начало подстроки
+      start = charIndexMap[currentChar] + 1;
+    }
+    // Обновляем индекс текущего символа в карте
+    charIndexMap[currentChar] = end;
+    // Вычисляем длину текущей подстроки и обновляем максимальную длину
+    maxLength = Math.max(maxLength, end - start + 1);
+  }
+  return maxLength;
+}
+console.log(longestSubstring("abcabcbb")); 
+// Ожидаемый результат: 3 ("abc" - подстрока без повторяющихся символов)
+console.log(longestSubstring("bbbbb")); 
+// Ожидаемый результат: 1 ("b" - подстрока без повторяющихся символов)
+console.log(longestSubstring("pwwkew")); 
+// Ожидаемый результат: 3 ("wke" - подстрока без повторяющихся символов)
+
+//==============Задача: Найти сумму всех простых чисел до заданного числа
+function sumPrimes(num) {
+  let sum = 0;
+  for (let i = 2; i <= num; i++) {
+    let isPrime = true;
+    for (let j = 2; j <= Math.sqrt(i); j++) {
+      if (i % j === 0) {
+        isPrime = false;
+        break;
+      }
+    }
+    if (isPrime) {
+      sum += i;
+    }
+  }
+  return sum;
+}
+console.log(sumPrimes(10)); // Ожидаемый результат: 17 (2 + 3 + 5 + 7)
+console.log(sumPrimes(20)); // Ожидаемый результат: 77 (2 + 3 + 5 + 7 + 11 + 13 + 17 + 19)
+
+//==================== Задача: Сжатие строки
+function compressString(str) {
+  let compressed = '';
+  let count = 1;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === str[i + 1]) {
+      count++;
+    } else {
+      compressed += str[i] + count;
+      count = 1;
+    }
+  }
+  return compressed.length < str.length ? compressed : str;
+}
+console.log(compressString("aabcccccaaa"));// Ожидаемый результат: "a2b1c5a3"
+console.log(compressString("abcdef")); // Ожидаемый результат: "abcdef" (так как сжатая версия не короче исходной)
+console.log(compressString("abbcccddddeeeee")); // Ожидаемый результат: "a1b2c3d4e5"
+
+
+
