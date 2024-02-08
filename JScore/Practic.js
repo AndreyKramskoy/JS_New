@@ -1300,5 +1300,3 @@ console.log(compressString("aabcccccaaa"));// Ожидаемый результ�
 console.log(compressString("abcdef")); // Ожидаемый результат: "abcdef" (так как сжатая версия не короче исходной)
 console.log(compressString("abbcccddddeeeee")); // Ожидаемый результат: "a1b2c3d4e5"
 
-
-
