@@ -15,27 +15,60 @@
 3. **`finally(onFinally)`:** Метод `finally()` добавляет колбэк, который будет вызван независимо от того, успешно ли промис был выполнен или завершился ошибкой. Он позволяет выполнить код, который должен выполняться независимо от исхода.
 4. **`Promise.resolve(value)` и `Promise.reject(reason)`:** Статические методы `resolve()` и `reject()` позволяют создавать промисы сразу с определенными значениями (в случае успеха) или причинами ошибки.
 5. **`Promise.all(iterable)`:** Статический метод `all()` принимает итерируемый объект (обычно массив) промисов и возвращает новый промис, который будет выполнен, когда все переданные промисы успешно завершатся. Возвращает массив результатов.
+
+const promise1 = Promise.resolve(3);
+const promise2 = 42;
+const promise3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 100, 'foo');
+});
+Promise.all([promise1, promise2, promise3]).then((values) => {
+  console.log(values); // expected output: [3, 42, "foo"]
+});
+
 6. **`Promise.race(iterable)`:** Статический метод `race()` также принимает итерируемый объект промисов, но завершается, как только один из переданных промисов завершится (либо успешно, либо с ошибкой). Возвращает результат первого завершившегося промиса.
+
+const promise1 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 100, 'one');
+});
+const promise2 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 200, 'two');
+});
+Promise.race([promise1, promise2]).then((value) => {
+  console.log(value); // expected output: 'one' (because promise1 resolves first)
+});
+
 7. **`Promise.allSettled(iterable)`:** Статический метод `allSettled()` принимает итерируемый объект промисов и возвращает промис, который завершится только тогда, когда все переданные промисы завершатся (независимо от исхода). Возвращает массив объектов с результатами и состоянием каждого промиса.
+
+const promise1 = Promise.resolve(42);
+const promise2 = new Promise((resolve, reject) => setTimeout(reject, 100, 'Ошибка'));
+Promise.allSettled([promise1, promise2]).then((results) => {
+  console.log(results);
+   expected output:
+    [
+      { status: "fulfilled", value: 42 },
+      { status: "rejected", reason: "Ошибка" }
+    ]
+  });
+
 
 Эти методы позволяют эффективно управлять асинхронными операциями, создавать цепочки обработчиков и обрабатывать ошибки. Они являются основой для удобного и структурированного асинхронного программирования в JavaScript.
 */
 //начнем с примера асинхронного кода с коллбэк функциями и посмотрим как выглядит код в данной реализации
 console.log('Request data...');
 
-// setTimeout(() => {
-//   console.log('Preparing data...');
+setTimeout(() => {
+  console.log('Preparing data...');
 
-//   const backendData = {
-//     server: 'aws',
-//     port: 2000,
-//     status: 'working',
-//   };
-//   setTimeout(() => {
-//     backendData.modified = true;
-//     console.log('Data received', backendData);
-//   }, 2000);
-// }, 3500);
+  const backendData = {
+    server: 'aws',
+    port: 2000,
+    status: 'working',
+  };
+  setTimeout(() => {
+    backendData.modified = true;
+    console.log('Data received', backendData);
+  }, 2000);
+}, 3500);
 
 //такая структура трудно поддерживаема и объемна поэтому появились промиссы
 //создаем константу промисс, для этого используем глобалл класс Promise и передаем в его функцию дфе функции промиссов это resolve, reject
@@ -458,3 +491,473 @@ async function delayedUpperCaseAsync(str, ms) {
   }
 }
 delayedUpperCaseAsync('hello', 2000);
+
+//===========================================================================================================================================
+//=======Задача fetchUserData, принимает на вход ID пользователя и возвращает промис. Этот промис должен делать GET-запрос к некоторому API для получения данных о пользователе с указанным ID.
+
+function fetchUserData(id) {
+  return new Promise((resolve, reject) => {
+    fetch(`https://api.example.com/users/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Ошибка при получении данных о пользователе');
+        }
+        return response.json();
+      })
+      .then((userData) => {
+        resolve(userData);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+fetchUserData(123)
+  .then((userData) => {
+    console.log('Данные о пользователе:', userData);
+  })
+  .catch((error) => {
+    console.error('Ошибка при получении данных:', error);
+  });
+//==============Задача: Получение данных о погоде
+function getWeather(city) {
+  return new Promise((resolve, reject) => {
+    fetch(`https://api.meteo.com/cities/${city}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Ошибка при получении данных о пользователе');
+        }
+        return response.json();
+      })
+      .then((cityWeather) => {
+        resolve(cityWeather);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+getWeather('Moscow')
+  .then((weatherData) => {
+    console.log('Данные о погоде:', weatherData);
+  })
+  .catch((error) => {
+    console.error('Ошибка получения данных о погоде:', error);
+  });
+//===========================================
+// Функция, симулирующая длительную операцию
+function longOperation() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const result = Math.random() >= 0.5; // Случайный результат операции
+      if (result) {
+        resolve('Операция завершена успешно!');
+      } else {
+        reject('Операция завершена с ошибкой!');
+      }
+    }, 2000); // Длительность операции: 2 секунды
+  });
+}
+
+// Вызываем нашу функцию longOperation
+console.log('Начало выполнения операции...');
+longOperation()
+  .then((result) => {
+    console.log('Результат:', result);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  })
+  .finally(() => {
+    console.log('Операция завершена.');
+  });
+
+//====================Задача:У вас есть массив с URL-адресами изображений. Напишите функцию loadImages, которая принимает этот массив в качестве аргумента и возвращает промис.
+const imageUrls = [
+  'https://example.com/image1.jpg',
+  'https://example.com/image2.jpg',
+  'https://example.com/image3.jpg',
+];
+function loadImages(imageUrls) {
+  const promises = imageUrls.map((url) => fetch(url));
+  return Promise.all(promises);
+}
+loadImages(imageUrls)
+  .then(() => {
+    console.log('Все изображения успешно загружены!');
+  })
+  .catch((error) => {
+    console.error('Ошибка загрузки изображений:', error);
+  });
+
+//===================У вас есть массив промисов, которые представляют собой запросы к API для получения данных о пользователях. Напишите функцию fetchUserData, которая принимает массив пользовательских идентификаторов и возвращает массив объектов с данными о пользователях
+const userIds = [1, 2, 3, 4, 5];
+function fetchUserData(userIds) {
+  const userData = userIds.map((userId) =>
+    fetch(`https://example/user/${userId}`)
+  );
+  return Promise.all(userData);
+}
+fetchUserData(userIds)
+  .then((userData) => {
+    console.log('Данные о пользователях:', userData);
+  })
+  .catch((error) => {
+    console.error('Ошибка при получении данных о пользователях:', error);
+  });
+
+const imagesURLs = [
+  'https://example.com/image1.jpg',
+  'https://example.com/image2.jpg',
+  'https://example.com/image3.jpg',
+];
+function preloadImages(imagesURLs) {
+  const imagesData = imagesURLs.map((url) => fetch(url));
+  return Promise.all(imagesData);
+}
+preloadImages(imagesURLs)
+  .then((imagesData) => {
+    console.log('Все изображения успешно загружены!', imagesData);
+  })
+  .catch((error) => {
+    console.error('Ошибка загрузки изображений:', error);
+  });
+
+//=====У вас есть массив чисел. Напишите функцию findAverage, которая принимает этот массив в качестве аргумента и возвращает промис, который разрешается со средним значением чисел в массиве.
+function findAverage(arr) {
+  return new Promise((resolve, reject) => {
+    const numericArr = arr.filter((item) => typeof item === 'number');
+    if (numericArr.length === 0) {
+      resolve(0);
+    } else if (numericArr.length !== arr.length) {
+      reject('Массив содержит неправильные элементы');
+    } else {
+      const arrSum = numericArr.reduce((acc, curr) => acc + curr, 0);
+      resolve(arrSum / numericArr.length);
+    }
+  });
+}
+
+findAverage([1, 2, 3, 4, 5])
+  .then((average) => {
+    console.log('Среднее значение:', average); // Ожидаемый результат: 3
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+findAverage([])
+  .then((average) => {
+    console.log('Среднее значение:', average); // Ожидаемый результат: 0
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+findAverage([1, 2, 'a', 4, 5])
+  .then((average) => {
+    console.log('Среднее значение:', average);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error); // Ожидаемый результат: "Массив содержит неправильные элементы"
+  });
+
+//=========. Этот промис должен разрешаться массивом объектов только для пользователей, чей возраст больше или равен 18.
+const users = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 17 },
+  { name: 'Charlie', age: 30 },
+  { name: 'David', age: 20 },
+];
+function filterAdults(usersArr) {
+  return new Promise((resolve, reject) => {
+    const adults = usersArr.filter((item) => item.age > 18);
+    if (adults.length > 0) {
+      resolve(adults);
+    } else {
+      reject('Нет взрослых пользователей');
+    }
+  });
+}
+filterAdults(users)
+  .then((adults) => {
+    console.log('Взрослые пользователи:', adults);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+function findUniqueElements(arr) {
+  return new Promise((resolve, reject) => {
+    const uniqueElements = arr.filter(
+      (num, index) => arr.indexOf(num) === arr.lastIndexOf(num)
+    );
+    if (uniqueElements) {
+      resolve(uniqueElements);
+    } else {
+      reject('Error');
+    }
+  });
+}
+findUniqueElements([1, 2, 3, 2, 4, 5, 3])
+  .then((uniqueElements) => {
+    console.log('Уникальные элементы:', uniqueElements); // Ожидаемый результат: [1, 4, 5]
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+findUniqueElements([5, 7, 5, 9, 8, 7, 6])
+  .then((uniqueElements) => {
+    console.log('Уникальные элементы:', uniqueElements); // Ожидаемый результат: [9, 8, 6]
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+findUniqueElements([2, 2, 2, 2, 2, 2])
+  .then((uniqueElements) => {
+    console.log('Уникальные элементы:', uniqueElements); // Ожидаемый результат: []
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+//=====================
+function filterBooksByGenre(books, genre) {
+  return new Promise((resolve, reject) => {
+    const filteredBooks = books.filter((book) => book.genre === genre);
+    if (filteredBooks) {
+      resolve(filteredBooks);
+    } else {
+      reject(err);
+    }
+  });
+}
+const books = [
+  {
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald',
+    genre: 'Novel',
+    pages: 218,
+  },
+  {
+    title: 'To Kill a Mockingbird',
+    author: 'Harper Lee',
+    genre: 'Novel',
+    pages: 324,
+  },
+  {
+    title: '1984',
+    author: 'George Orwell',
+    genre: 'Dystopian Fiction',
+    pages: 328,
+  },
+  {
+    title: 'Brave New World',
+    author: 'Aldous Huxley',
+    genre: 'Dystopian Fiction',
+    pages: 288,
+  },
+  {
+    title: 'The Catcher in the Rye',
+    author: 'J.D. Salinger',
+    genre: 'Novel',
+    pages: 234,
+  },
+];
+
+filterBooksByGenre(books, 'Novel')
+  .then((filteredBooks) => {
+    console.log('Книги в жанре "Novel":', filteredBooks);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+filterBooksByGenre(books, 'Science Fiction')
+  .then((filteredBooks) => {
+    console.log('Книги в жанре "Science Fiction":', filteredBooks);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+//====================================
+const books1 = [
+  { title: 'Book 1', author: 'Author A' },
+  { title: 'Book 2', author: 'Author B' },
+  { title: 'Book 3', author: 'Author A' },
+];
+function filterBooksByAuthor(books1, author) {
+  return new Promise((resolve, reject) => {
+    const byAuthor = books1.filter((book) => book.author === author);
+    if (byAuthor.length !== 0) {
+      resolve(byAuthor);
+    } else {
+      reject('This author is absent');
+    }
+  });
+}
+
+filterBooksByAuthor(books1, 'Author A')
+  .then((filteredBooks) => {
+    console.log('Книги автора A:', filteredBooks);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+filterBooksByAuthor(books1, 'Author C')
+  .then((filteredBooks) => {
+    console.log('Книги автора C:', filteredBooks);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+//===================================================
+function filterUsersByAgeRange(users2, minAge, maxAge) {
+  return new Promise((resolve, reject) => {
+    const filteredUsers = users2.filter(
+      (user) => user.age > minAge || user.age < maxAge
+    );
+    if (filteredUsers.length !== 0) {
+      resolve(filteredUsers);
+    } else {
+      reject(error);
+    }
+  });
+}
+const users2 = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 },
+  { name: 'Charlie', age: 35 },
+  { name: 'David', age: 20 },
+];
+
+filterUsersByAgeRange(users2, 25, 30)
+  .then((filteredUsers) => {
+    console.log('Пользователи в возрасте от 25 до 30 лет:', filteredUsers);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+filterUsersByAgeRange(users2, 40, 50)
+  .then((filteredUsers) => {
+    console.log('Пользователи в возрасте от 40 до 50 лет:', filteredUsers);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+//==Напишите функцию findProductById, которая принимает массив products и id товара в качестве аргументов. Функция должна возвращать промис, который разрешается с объектом товара, если такой товар найден по указанному id, или отклоняется с сообщением "Товар не найден", если товар с указанным id отсутствует.
+const products = [
+  { id: 1, name: 'Product 1', price: 10 },
+  { id: 2, name: 'Product 2', price: 20 },
+  { id: 3, name: 'Product 3', price: 30 },
+  // Другие товары...
+];
+function findProductById(products, id) {
+  return new Promise((resolve, reject) => {
+    const product = products.find((item) => item.id === id);
+    if (product) {
+      resolve(product);
+    } else {
+      reject('There is no product');
+    }
+  });
+}
+findProductById(products, 2)
+  .then((product) => console.log('Найденный товар:', product))
+  .catch((error) => console.error('Ошибка:', error));
+findProductById(products, 4)
+  .then((product) => {
+    console.log('Найденный товар:', product);
+  })
+  .catch((error) => {
+    console.error('Ошибка:', error);
+  });
+
+  const use = [
+    { username: 'user1', age: 25 },
+    { username: 'user2', age: 30 },
+    { username: 'user3', age: 35 },
+  ];
+function findUserByUsername(arr, name){
+  return new Promise((resolve,reject)=>{
+    const currUser = arr.find((item)=>item.username === name)
+    if(currUser){
+      resolve(currUser)
+    }else{
+      reject("error")
+    }
+  })
+}
+  findUserByUsername(use, 'user2')
+    .then((user) => console.log('Найденный пользователь:', user))
+    .catch((error) => console.error('Ошибка:', error));
+
+  findUserByUsername(use, 'user4')
+    .then((user) => console.log('Найденный пользователь:', user))
+    .catch((error) => console.error('Ошибка:', error));
+
+    /////////////==========================================
+function findProductsWithPriceLessThan(arr, pr){
+  return new Promise((resolve,reject)=>{
+    const filteredProducts=arr.filter((item)=>item.price<pr)
+    if(filteredProducts){
+      resolve(filteredProducts);
+    }else{
+      reject('err')
+    }
+  })
+}
+    const products2 = [
+      { name: 'Product 1', price: 10 },
+      { name: 'Product 2', price: 20 },
+      { name: 'Product 3', price: 30 },
+    ];
+
+    findProductsWithPriceLessThan(products2, 25)
+      .then((filteredProducts) => {
+        console.log('Товары с ценой меньше 25:', filteredProducts);
+      })
+      .catch((error) => {
+        console.error('Ошибка:', error);
+      });
+
+function findUsersByAge(arr, num){
+  return new Promise((resolve,reject)=>{
+    let filteredUsers = arr.filter((item)=>item.age === num)
+    if(filteredUsers){
+resolve(filteredUsers);
+    }else{
+      reject('Пользователи данного возраста не найдены');
+    }
+  })
+}
+      const users4 = [
+        { name: 'Alice', age: 25 },
+        { name: 'Bob', age: 30 },
+        { name: 'Charlie', age: 25 },
+        { name: 'David', age: 20 },
+      ];
+
+      findUsersByAge(users4, 25)
+        .then((filteredUsers) => {
+          console.log('Пользователи в возрасте 25:', filteredUsers);
+        })
+        .catch((error) => {
+          console.error('Ошибка:', error);
+        });
+
+      findUsersByAge(users4, 40)
+        .then((filteredUsers) => {
+          console.log('Пользователи в возрасте 40:', filteredUsers);
+        })
+        .catch((error) => {
+          console.error('Ошибка:', error);
+        });

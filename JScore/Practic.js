@@ -956,32 +956,34 @@ console.log(isAnagram('hello', 'bye')); // Ожидаемый результат
 console.log(isAnagram('rail safety', 'fairy tales')); // Ожидаемый результат: true
 
 //==============Задача: Подсчет уникальных букв в строке
-function countUniqueLetters(str){
-  let cleanString=str.toLowerCase().replace(/[^a-z0-9]/g, '')
-  let countLetters={}
-  for (let char of cleanString){
-    countLetters[char] = (countLetters[char] || 0)+1
+function countUniqueLetters(str) {
+  let cleanString = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+  let countLetters = {};
+  for (let char of cleanString) {
+    countLetters[char] = (countLetters[char] || 0) + 1;
   }
-  return countLetters
+  return countLetters;
 }
-console.log(countUniqueLetters('hello')); 
+console.log(countUniqueLetters('hello'));
 // Ожидаемый результат: { h: 1, e: 1, l: 2, o: 1 }
 console.log(countUniqueLetters('testing'));
 // Ожидаемый результат: { t: 2, e: 1, s: 1, i: 1, n: 1, g: 1 }
 
 //==========Задача: Подсчет количества уникальных слов
 
-function countUniqueWords(str){
-  let newStr = str.toLowerCase().match(/\b\w+(?:'\w+)?\b/g);// пояснение выражения смотри ниже
-  let uniqueWords={}
-  for(let word of newStr){
-    uniqueWords[word]=(uniqueWords[word] || 0)+1
+function countUniqueWords(str) {
+  let newStr = str.toLowerCase().match(/\b\w+(?:'\w+)?\b/g); // пояснение выражения смотри ниже
+  let uniqueWords = {};
+  for (let word of newStr) {
+    uniqueWords[word] = (uniqueWords[word] || 0) + 1;
   }
-  return uniqueWords
+  return uniqueWords;
 }
-console.log(countUniqueWords('Hello world world!')); 
+console.log(countUniqueWords('Hello world world!'));
 // Ожидаемый результат: { hello: 1, world: 2 }
-console.log(countUniqueWords(`JavaScript is great, isn't it? JavaScript is awesome!`)); 
+console.log(
+  countUniqueWords(`JavaScript is great, isn't it? JavaScript is awesome!`)
+);
 // Ожидаемый результат: { javascript: 2, is: 2, great: 1, isn't: 1, it: 1, awesome: 1 }
 
 /*
@@ -995,46 +997,46 @@ console.log(countUniqueWords(`JavaScript is great, isn't it? JavaScript is aweso
 */
 
 //=======Задача: Подсчет количества гласных букв
-function countVowels(str){
-  let vowels = 'aeiou'
-  let count = 0
-  let result=[]
-  for(let i=0;i<str.length;i++){
-    if(vowels.toLowerCase().includes(str[i])){
-      count++
-      result.push(str[i])
+function countVowels(str) {
+  let vowels = 'aeiou';
+  let count = 0;
+  let result = [];
+  for (let i = 0; i < str.length; i++) {
+    if (vowels.toLowerCase().includes(str[i])) {
+      count++;
+      result.push(str[i]);
     }
-     }
-     if (count > 0){
-      return `${count} шт. ${result} - гласные`
-    }else{
-      return count + '- нет гласных'
-    }
+  }
+  if (count > 0) {
+    return `${count} шт. ${result} - гласные`;
+  } else {
+    return count + '- нет гласных';
+  }
 }
 console.log(countVowels('Hello, World!')); // Ожидаемый результат: 3 (e, o, o - гласные)
 console.log(countVowels('JavaScript is awesome')); // Ожидаемый результат: 8 (a, i, a, i, e, o, e, a - гласные)
 console.log(countVowels('Why?')); // Ожидаемый результат: 0 (нет гласных)
 
 //=======Задача: Сумма уникальных чисел
-function sumUnique(arr){
+function sumUnique(arr) {
   const unique = [];
-  let count=0
-for(let i=0; i<arr.length;i++){
-  if(arr.indexOf(arr[i])===arr.lastIndexOf(arr[i])){
-    count+=arr[i]
-    unique.push(arr[i]);
+  let count = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr.indexOf(arr[i]) === arr.lastIndexOf(arr[i])) {
+      count += arr[i];
+      unique.push(arr[i]);
+    }
   }
-}
-console.log('Уникальные числа:', unique);
-return count
+  console.log('Уникальные числа:', unique);
+  return count;
 }
 //ИЛИ
 function sumUniqueNumbers(arr) {
   const uniqueNumbers = [...new Set(arr)];
   return uniqueNumbers.reduce((sum, num) => sum + num, 0);
 }
-console.log(sumUnique([1, 2, 3, 2, 4, 5, 1, 6])); 
-console.log(sumUnique([-3, 0, 3, -3, 3, 5, 5, -3])); 
+console.log(sumUnique([1, 2, 3, 2, 4, 5, 1, 6]));
+console.log(sumUnique([-3, 0, 3, -3, 3, 5, 5, -3]));
 
 //======Задача: Уникальная пара
 function findUniquePair(arr, target) {
@@ -1061,18 +1063,18 @@ console.log(findUniquePair([1, 2, 3, 4, 5], 10)); // Ожидаемый резу
 console.log(findUniquePair([3, 4, 5, 6, 7], 13)); // Ожидаемый результат: [6, 7]
 
 //===== Задача: Найти самое часто встречающееся число в массиве
-function findMostFrequent(arr){
-  let frequentNum
-  let countMax=0
-  let count={}
-for(let num of arr){
-  count[num]=(count[num] || 0)+1
-  if(count[num]>countMax){
-    countMax=count[num]
-    frequentNum=num
+function findMostFrequent(arr) {
+  let frequentNum;
+  let countMax = 0;
+  let count = {};
+  for (let num of arr) {
+    count[num] = (count[num] || 0) + 1;
+    if (count[num] > countMax) {
+      countMax = count[num];
+      frequentNum = num;
+    }
   }
-}
-return frequentNum
+  return frequentNum;
 }
 console.log(findMostFrequent([1, 3, 1, 3, 2, 1])); // Ожидаемый результат: 1
 console.log(findMostFrequent([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5])); // Ожидаемый результат: 5
@@ -1089,7 +1091,7 @@ console.log(countOccurrences('The quick brown fox', 'Fox')); // Ожидаемы
 console.log(countOccurrences('JavaScript JavaScript is fun', 'javaScript')); // Ожидаемый результат: 2
 
 //=========Задача: Подсчет количества уникальных символов
-function countUniqueCharacters(str){
+function countUniqueCharacters(str) {
   const uniqueChars = new Set(str);
   return uniqueChars.size; //Метод доступа size возвращает количество (уникальных) элементов в объекте Set
 }
@@ -1099,35 +1101,45 @@ console.log(countUniqueCharacters('AAAAAaaaa')); // Ожидаемый резу�
 
 // ============== Задача: Проверка на анаграмму
 function areAnagrams(str1, str2) {
-  const cleanStr1 = str1.replace(/[^a-zA-Z]/g, '').toLowerCase().split('').sort().join('');
-  const cleanStr2 = str2.replace(/[^a-zA-Z]/g, '').toLowerCase().split('').sort().join('');
-  
+  const cleanStr1 = str1
+    .replace(/[^a-zA-Z]/g, '')
+    .toLowerCase()
+    .split('')
+    .sort()
+    .join('');
+  const cleanStr2 = str2
+    .replace(/[^a-zA-Z]/g, '')
+    .toLowerCase()
+    .split('')
+    .sort()
+    .join('');
+
   return cleanStr1 === cleanStr2;
 }
 console.log(areAnagrams('listen', 'silent')); // Ожидаемый результат: true
 console.log(areAnagrams('hello', 'bye')); // Ожидаемый результат: false
 console.log(areAnagrams('rail safety', 'fairy tales')); // Ожидаемый результат: true
 
-function sumUnique(arr){
-  let uniqueArr = [...new Set (arr)]
-  return sum = uniqueArr.reduce((acc, cur)=>acc + cur,0)
+function sumUnique(arr) {
+  let uniqueArr = [...new Set(arr)];
+  return (sum = uniqueArr.reduce((acc, cur) => acc + cur, 0));
 }
 console.log(sumUnique([1, 2, 2, 3, 4, 4, 5, 6, 6])); // Ожидаемый результат: 21 (1 + 3 + 5 + 6 = 15)
 console.log(sumUnique([1, 2, 3, 4, 5])); // Ожидаемый результат: 15 (все элементы уникальны)
 console.log(sumUnique([1, 1, 1, 1, 1])); // Ожидаемый результат: 1 (только один уникальный элемент)
 
 //===========Задача: Найти разницу между суммой четных и нечетных чисел в массиве
-function findEvenOddDifference(arr){
+function findEvenOddDifference(arr) {
   let evenSum = 0;
-    let oddSum = 0;
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] % 2 === 0) {
-            evenSum += arr[i];
-        } else {
-            oddSum += arr[i];
-        }
+  let oddSum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] % 2 === 0) {
+      evenSum += arr[i];
+    } else {
+      oddSum += arr[i];
     }
-    return evenSum - oddSum;
+  }
+  return evenSum - oddSum;
 }
 console.log(findEvenOddDifference([1, 2, 3, 4, 5]));
 console.log(findEvenOddDifference([3, 5, 7, 9]));
@@ -1136,9 +1148,9 @@ console.log(findEvenOddDifference([2, 4, 6, 8]));
 function sumNestedArrays(arr) {
   let sum = 0;
   for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr[i].length; j++) {
-          sum += arr[i][j];
-      }
+    for (let j = 0; j < arr[i].length; j++) {
+      sum += arr[i][j];
+    }
   }
   return sum;
 }
@@ -1146,51 +1158,50 @@ console.log(sumNestedArrays([[1, 2, 3], [4, 5], [6]])); // Ожидаемый р
 console.log(sumNestedArrays([[10, 20], [30], [40, 50, 60]])); // Ожидаемый результат: 210
 console.log(sumNestedArrays([[2], [4], [6], [8], [10]])); // Ожидаемый результат: 30
 
-
 //================= Задача: Подсчет гласных
 function countVowels(str) {
   const vowelRegex = /[aeiouAEIOU]/g;
   const matches = str.match(vowelRegex);
   return matches ? matches.length : 0;
 }
-console.log(countVowels("Hello, World!")); 
-console.log(countVowels("JavaScript")); 
-console.log(countVowels("OpenAI GPT")); 
+console.log(countVowels('Hello, World!'));
+console.log(countVowels('JavaScript'));
+console.log(countVowels('OpenAI GPT'));
 
 //================= Задача: Перевернуть слова в строке без изменения порядка слов
-function reverseWordsInString(str){
-  let strArr = str.split(' ')
-  let newStrArr = strArr.map((el)=>el.split('').reverse().join(''))
-  return newStrArr.join(' ')
+function reverseWordsInString(str) {
+  let strArr = str.split(' ');
+  let newStrArr = strArr.map((el) => el.split('').reverse().join(''));
+  return newStrArr.join(' ');
 }
-console.log(reverseWordsInString("Hello, World!")); // Ожидаемый результат: "olleH, dlroW!"
-console.log(reverseWordsInString("JavaScript is amazing")); // Ожидаемый результат: "tpircSavaJ si gnizama"
-console.log(reverseWordsInString("OpenAI GPT-3 is fascinating")); // Ожидаемый результат: "NAepO TPG-3 si gnitatsissafa"
+console.log(reverseWordsInString('Hello, World!')); // Ожидаемый результат: "olleH, dlroW!"
+console.log(reverseWordsInString('JavaScript is amazing')); // Ожидаемый результат: "tpircSavaJ si gnizama"
+console.log(reverseWordsInString('OpenAI GPT-3 is fascinating')); // Ожидаемый результат: "NAepO TPG-3 si gnitatsissafa"
 
 //================Задача: Поиск отсутствующего числа в массиве
-function findMissingNumber(arr){
-  let numbers = []
-  for (let i=1;i<=arr.length + 1;i++){
-    if(arr.indexOf(i) === -1){
-      numbers.push(i)
+function findMissingNumber(arr) {
+  let numbers = [];
+  for (let i = 1; i <= arr.length + 1; i++) {
+    if (arr.indexOf(i) === -1) {
+      numbers.push(i);
     }
   }
-  return numbers
+  return numbers;
 }
 console.log(findMissingNumber([1, 3, 4, 5])); // Ожидаемый результат: 2
 console.log(findMissingNumber([2, 4, 1, 6, 3, 7, 8, 10])); // Ожидаемый результат: 5
 console.log(findMissingNumber([1, 2, 3, 4, 5, 7, 8, 9, 10])); // Ожидаемый результат: 6
 
 //=================Задача: Минимальное и максимальное значение
-function findMinMax(arr){
-  let min = Math.min(...arr)
-  let max = Math.max(...arr)
-  return `min:${min} max:${max}`
+function findMinMax(arr) {
+  let min = Math.min(...arr);
+  let max = Math.max(...arr);
+  return `min:${min} max:${max}`;
 }
-console.log(findMinMax([3, 1, 9, 0, -2, 7])); 
+console.log(findMinMax([3, 1, 9, 0, -2, 7]));
 // Ожидаемый результат:  min: -2, max: 9
-console.log(findMinMax([10, 5, 2, 8, -1])); 
-// Ожидаемый результат:  min: -1, max: 10 
+console.log(findMinMax([10, 5, 2, 8, -1]));
+// Ожидаемый результат:  min: -1, max: 10
 
 //================Задача: Подсчет уникальных слов в строке
 function countUniqueWords(str) {
@@ -1199,20 +1210,20 @@ function countUniqueWords(str) {
   for (let i = 0; i < lowerCaseStr.length; i++) {
     // Используем слово в качестве ключа в объекте uniqueWords
     uniqueWords[lowerCaseStr[i]] = true;
-    console.log(uniqueWords)
+    console.log(uniqueWords);
   }
   // Возвращаем количество уникальных слов (количество ключей в объекте)
   return Object.keys(uniqueWords).length;
 }
-console.log(countUniqueWords("Hello world world World"));
+console.log(countUniqueWords('Hello world world World'));
 // Ожидаемый результат: 2 (так как "world" и "World" считаются одним уникальным словом)
 
 function countUniqueWords(str) {
   let lowerCaseStr = str.toLowerCase().split(' ');
-  let uniqWords = [...new Set(lowerCaseStr)]
-  return uniqWords.length
+  let uniqWords = [...new Set(lowerCaseStr)];
+  return uniqWords.length;
 }
-console.log(countUniqueWords("Hello world world World"));
+console.log(countUniqueWords('Hello world world World'));
 //=============================================================
 
 //===========Задача: Поиск максимального произведения двух чисел
@@ -1227,13 +1238,13 @@ function maxProduct(arr) {
     } else if (arr[i] > max2) {
       max2 = arr[i];
     }
-    console.log(max1, max2)
+    console.log(max1, max2);
   }
   return max1 * max2;
 }
-console.log(maxProduct([2, 3, 4, 5, 1])); 
+console.log(maxProduct([2, 3, 4, 5, 1]));
 // Ожидаемый результат: 20 (произведение 4 и 5)
-console.log(maxProduct([-2, 0, -1, 3, 5])); 
+console.log(maxProduct([-2, 0, -1, 3, 5]));
 // Ожидаемый результат: 15 (произведение -3 и -5)
 
 //=================================Задача: Самая длинная подстрока без повторяющихся символов
@@ -1243,7 +1254,10 @@ function longestSubstring(s) {
   let charIndexMap = {};
   for (let end = 0; end < s.length; end++) {
     let currentChar = s[end];
-    if (charIndexMap[currentChar] !== undefined && charIndexMap[currentChar] >= start) {
+    if (
+      charIndexMap[currentChar] !== undefined &&
+      charIndexMap[currentChar] >= start
+    ) {
       // Если символ уже встречался и его индекс находится в текущем подстроке,
       // обновляем начало подстроки
       start = charIndexMap[currentChar] + 1;
@@ -1255,11 +1269,11 @@ function longestSubstring(s) {
   }
   return maxLength;
 }
-console.log(longestSubstring("abcabcbb")); 
+console.log(longestSubstring('abcabcbb'));
 // Ожидаемый результат: 3 ("abc" - подстрока без повторяющихся символов)
-console.log(longestSubstring("bbbbb")); 
+console.log(longestSubstring('bbbbb'));
 // Ожидаемый результат: 1 ("b" - подстрока без повторяющихся символов)
-console.log(longestSubstring("pwwkew")); 
+console.log(longestSubstring('pwwkew'));
 // Ожидаемый результат: 3 ("wke" - подстрока без повторяющихся символов)
 
 //==============Задача: Найти сумму всех простых чисел до заданного числа
@@ -1296,7 +1310,121 @@ function compressString(str) {
   }
   return compressed.length < str.length ? compressed : str;
 }
-console.log(compressString("aabcccccaaa"));// Ожидаемый результат: "a2b1c5a3"
-console.log(compressString("abcdef")); // Ожидаемый результат: "abcdef" (так как сжатая версия не короче исходной)
-console.log(compressString("abbcccddddeeeee")); // Ожидаемый результат: "a1b2c3d4e5"
+console.log(compressString('aabcccccaaa')); // Ожидаемый результат: "a2b1c5a3"
+console.log(compressString('abcdef')); // Ожидаемый результат: "abcdef" (так как сжатая версия не короче исходной)
+console.log(compressString('abbcccddddeeeee')); // Ожидаемый результат: "a1b2c3d4e5"
 
+//===========================Задача: Поиск уникальных элементов
+function findUniqueElements(arr) {
+  return arr.filter((num, index) => arr.indexOf(num) === arr.lastIndexOf(num));
+}
+console.log(findUniqueElements([1, 2, 3, 2, 4, 5, 3])); // Ожидаемый результат: [1, 4, 5]
+console.log(findUniqueElements([5, 7, 5, 9, 8, 7, 6])); // Ожидаемый результат: [9, 8, 6]
+console.log(findUniqueElements([2, 2, 2, 2, 2, 2])); // Ожидаемый результат: []
+
+//========================Задача вывести имя и возр из массивов в массиве объектов пользователей
+const names = ['Alice', 'Bob', 'Charlie'];
+const ages = [25, 30, 35];
+function createUserObjects(names, ages) {
+  let objectsArr = [];
+  for (let i = 0; i < names.length; i++) {
+    let userObject = {
+      name: names[i],
+      age: ages[i],
+    };
+    objectsArr.push(userObject);
+  }
+  return objectsArr;
+}
+console.log(createUserObjects(names, ages));
+
+//============================
+const n1 = [10, 5, 8, 2, 15];
+function findMaxMin(arr){
+  let max = Math.max(...arr)
+  let min = Math.min(...arr)
+  return `max = ${max} min = ${min}`; 
+}
+console.log(findMaxMin(n1)); //max = 15 min = 2
+
+//============================================
+const use = [
+  { name: 'Alice', age: 25, email: 'alice@example.com' },
+  { name: 'Bob', age: 30, email: 'bob@example.com' },
+  { name: 'Charlie', age: 20, email: 'charlie@example.com' },
+];
+function findYoungestUser(arr) {
+  let youngestUser = arr[0];
+  for(let user of arr){
+    if (user.age < youngestUser.age) {
+      youngestUser = user;
+    }
+  }
+  return youngestUser;
+}
+console.log(findYoungestUser(use));// Ожидаемый результат: { name: 'Charlie', age: 20, email: 'charlie@example.com' }
+
+//========================
+const pr = [
+  { name: 'Товар 1', price: 10, quantity: 2 },
+  { name: 'Товар 2', price: 20, quantity: 1 },
+  { name: 'Товар 3', price: 5, quantity: 4 },
+];
+function calculateTotalPrice(arr) {
+  let totalPrice = 0
+  for(let item of arr){
+    let itemSum = item.price * item.quantity
+    totalPrice +=itemSum
+  }
+  return totalPrice
+}
+console.log(calculateTotalPrice(pr)); // Ожидаемый результат: 60
+
+//=======================================
+
+function findDuplicates(arr) {
+  return arr.filter((item, index) => arr.indexOf(item) !== index && arr.slice(0, index).includes(item));
+}
+const arr55 = [1, 2, 3, 4, 2, 5, 6, 3, 7, 8, 8];
+console.log(findDuplicates(arr55)); // Ожидаемый результат: [2, 3, 8]
+
+//=========================
+function countWords(str) {
+  // Преобразуем строку в нижний регистр, чтобы игнорировать регистр при подсчете слов
+  str = str.toLowerCase();  
+  // Разбиваем строку на массив слов, разделенных пробелами
+  const words = str.split(" ");
+  // Создаем объект для хранения количества вхождений каждого слова
+  const wordCount = {};
+  // Итерируемся по массиву слов
+  for (let word of words) {
+    // Если слово уже есть в объекте wordCount, увеличиваем его счетчик на 1
+    if (wordCount[word]) {
+      wordCount[word]++;
+    } else {
+      // Если слово встречается впервые, инициализируем его счетчик значением 1
+      wordCount[word] = 1;
+    }
+  }
+  return wordCount;
+}
+console.log(countWords("Hello world hello hello world"));
+// Ожидаемый результат: { hello: 3, world: 2 }
+
+function countWords(str){
+  let words = str.toLowerCase().split(' ')
+  let countWord = {}
+  for(let word of words){
+    if (countWord[word]) {
+      countWord[word]++;
+    } else {
+      countWord[word] = 1
+    }
+  }
+  return countWord
+}
+console.log(countWords('hello world hello')); 
+// Ожидаемый результат: { 'hello': 2, 'world': 1 }
+
+console.log(countWords('apple banana apple orange banana apple')); 
+// Ожидаемый результат: { 'apple': 3, 'banana': 2, 'orange': 1 }
