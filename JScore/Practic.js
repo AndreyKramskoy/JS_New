@@ -144,8 +144,9 @@ console.log(isPalindrome('hello')); // Ожидаемый результат: fa
 const words = ['apple', 'banana', 'cherry', 'date', 'elderberry'];
 function compareStringLength(a, b) {
   return a.length - b.length; // Функция для сравнения длин строк
+  // Если результат отрицательный, то первая строка будет помещена перед второй в отсортированном массиве. Если результат положительный, то вторая строка будет помещена перед первой. Если результат равен нулю, порядок строк не изменится.
 }
-const sortedWords = words.slice().sort(compareStringLength); // Сортировка массива слов по длине
+const sortedWords = words.slice().sort(compareStringLength); // Сортировка массива слов по длине slice-чтобы создать копию массива и работать с ней
 console.log('Исходный массив:', words);
 console.log('Отсортированный массив:', sortedWords);
 
@@ -1428,3 +1429,170 @@ console.log(countWords('hello world hello'));
 
 console.log(countWords('apple banana apple orange banana apple')); 
 // Ожидаемый результат: { 'apple': 3, 'banana': 2, 'orange': 1 }
+
+//==========Задача: Объединение массивов без дубликатов
+//вариант 1
+function mergeArrays(a,b,c){
+  let mergedAr = [...a,...b,...c]
+  cleanAr = [...new Set(mergedAr)]
+return cleanAr
+}
+console.log(mergeArrays([1, 2, 3], [2, 3, 4], [3, 4, 5])); 
+// Ожидаемый результат: [1, 2, 3, 4, 5]
+console.log(mergeArrays(['apple', 'banana'], ['banana', 'orange'], ['orange', 'kiwi'])); 
+// Ожидаемый результат: ['apple', 'banana', 'orange', 'kiwi']
+//вариант2
+function mergeArrays(a, b, c) {
+  let mergedAr = [];
+  for (let num of a) {
+    if (!mergedAr.includes(num)) {
+      mergedAr.push(num);
+    }
+  }
+  for (let num of b) {
+    if (!mergedAr.includes(num)) {
+      mergedAr.push(num);
+    }
+  }
+  for (let num of c) {
+    if (!mergedAr.includes(num)) {
+      mergedAr.push(num);
+    }
+  }
+  return mergedAr;
+}
+//вариант 3
+function mergeArrays(a, b, c) {
+  let mergedAr = a.concat(b, c);
+  let cleanAr = mergedAr.filter(
+    (item, index) => mergedAr.indexOf(item) === mergedAr.lastIndexOf(item)
+  );
+  return cleanAr;
+}
+
+//============================================================================
+function filterUniqueElements(arr){
+  let filtered = arr.filter(
+    (item, index) => arr.indexOf(item) === arr.lastIndexOf(item)
+  );
+return filtered}
+console.log(filterUniqueElements([1, 2, 3, 2, 4, 5, 3])); 
+// Ожидаемый результат: [1, 4, 5]
+console.log(filterUniqueElements([5, 7, 5, 9, 8, 7, 6])); 
+// Ожидаемый результат: [9, 8, 6]
+console.log(filterUniqueElements([2, 2, 2, 2, 2, 2])); 
+// Ожидаемый результат: []
+
+//======================================Задача: Поиск пересечения массивов
+// 1 вариант подходит для малых массивов имеет сложность O(n^2) из-за необходимости вызова indexOf для каждого элемента
+function findIntersection(ar1,ar2){
+  let newAr=[...ar1,...ar2]
+  let intersection = newAr.filter((item,index)=>newAr.indexOf(item)!==newAr.lastIndexOf(item))
+  return [... new Set(intersection)];
+}
+console.log(findIntersection([1, 2, 3], [2, 3, 4]));// Ожидаемый результат: [2, 3]
+console.log(findIntersection(['apple', 'banana', 'orange'], ['orange', 'kiwi'])); // Ожидаемый результат: ['orange']
+
+// 2 вариант подходит для больших массивов имеет сложность O(n), где n - суммарное количество элементов в обоих массивах
+function findIntersection(arr1, arr2) {
+  const countMap = {};  
+  // Подсчет количества вхождений элементов из первого массива
+  for (const elem of arr1) {
+    countMap[elem] = (countMap[elem] || 0) + 1;
+  }
+  // Подсчет количества вхождений элементов из второго массива
+  for (const elem of arr2) {
+    countMap[elem] = (countMap[elem] || 0) + 1;
+  }
+  // Фильтрация элементов, которые встречаются больше одного раза
+  const intersection = [];
+  for (const [key, value] of Object.entries(countMap)) {
+    if (value > 1) {
+      intersection.push(key);
+    }
+  }
+  return intersection;
+}
+console.log(findIntersection([1, 2, 3], [2, 3, 4])); 
+// Ожидаемый результат: [2, 3]
+console.log(findIntersection(['apple', 'banana', 'orange'], ['orange', 'kiwi'])); 
+// Ожидаемый результат: ['orange']
+
+//========
+function countLetters(str){
+  const cleaanStr = str.toLowerCase().replace(/[^a-z0-9]/g, '')
+  let countObject = {}
+  for(let item of cleaanStr){
+    countObject[item] = (countObject[item] || 0) + 1
+  }
+  return countObject;
+}
+console.log(countLetters('hello world')); 
+// Ожидаемый результат: { h: 1, e: 1, l: 3, o: 2, w: 1, r: 1, d: 1 }
+console.log(countLetters('apple banana')); 
+// Ожидаемый результат: { a: 4, p: 2, l: 1, e: 1, b: 1, n: 2 }
+
+
+//=======Задача: Объединение массивов без повторений
+//== Использование цикла
+function mergeArrays(a, b, c) {
+  const mergedSet = new Set();
+  [a, b, c].forEach(arr => arr.forEach(item => mergedSet.add(item)));
+  return Array.from(mergedSet);
+}
+console.log(mergeArrays([1, 2, 3], [2, 3, 4], [3, 4, 5])); 
+console.log(mergeArrays(['apple', 'banana'], ['banana', 'orange'], ['orange', 'kiwi'])); 
+
+//== Использование concat() и filter()
+function mergeArrays(a, b, c) {
+  const mergedArr = a.concat(b, c);
+  return mergedArr.filter((item, index) => mergedArr.indexOf(item) === index);
+}
+//OR
+function mergeArrays(a, b, c) {
+  const mergedArr = a.concat(b, c);
+  return [... new Set(mergedArr)]
+}
+console.log(mergeArrays([1, 2, 3], [2, 3, 4], [3, 4, 5])); 
+// Ожидаемый результат: [1, 2, 3, 4, 5]
+console.log(mergeArrays(['apple', 'banana'], ['banana', 'orange'], ['orange', 'kiwi'])); 
+// Ожидаемый результат: ['apple', 'banana', 'orange', 'kiwi']
+
+//==============Задача: Подсчет суммы четных чисел
+function sumOfEvenNumbers(arr){
+  let sum = 0
+  for(let num of arr){
+    if(num %2 === 0){
+      sum+=num
+    }
+  }
+  return sum
+}
+//ИЛИ
+function sumOfEvenNumbers(arr) {
+  return arr.reduce((sum, num) => num % 2 === 0 ? sum + num : sum, 0);
+}
+console.log(sumOfEvenNumbers([1, 2, 3, 4, 5])); 
+// Ожидаемый результат: 6 (2 + 4)
+console.log(sumOfEvenNumbers([2, 4, 6, 8])); 
+// Ожидаемый результат: 20 (2 + 4 + 6 + 8)
+console.log(sumOfEvenNumbers([1, 3, 5, 7])); 
+// Ожидаемый результат: 0 (нет четных чисел)
+
+//===========Задача: Подсчет количества гласных
+function countVowels(str){
+  let cleanSTR = str.toLowerCase().replace(/[^a-z0-9]/g, '')
+  let count = 0
+let vowels = 'aeiou'
+  for (let sim of cleanSTR) {
+    if (vowels.includes(sim)) count++;
+  }
+  return count
+}
+console.log(countVowels("Hello World")); // Ожидаемый результат: 3
+console.log(countVowels("JavaScript")); // Ожидаемый результат: 3
+console.log(countVowels("OpenAI GPT")); // Ожидаемый результат: 3
+
+
+
+
